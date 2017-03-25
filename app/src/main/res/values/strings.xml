@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Unit Converter</string>
+
+    <string-array name="type_array">
+        <item>Mass</item>
+        <item>Temperature</item>
+        <item>Distance</item>
+        <item>Currency</item>
+    </string-array>
+
+    <string-array name="mass_array">
+        <item>kg</item>
+        <item>g</item>
+        <item>lbs</item>
+        <item>oz</item>
+    </string-array>
+
+    <string-array name="temperature_array">
+        <item>°C</item>
+        <item>°F</item>
+    </string-array>
+
+    <string-array name="distance_array">
+        <item>miles</item>
+        <item>km</item>
+    </string-array>
+
+    <string-array name="currency_array">
+        <item>EUR(€)</item>
+        <item>GBP(£)</item>
+        <item>USD($)</item>
+        <item>JPY(¥)</item>
+    </string-array>
+
+</resources>
