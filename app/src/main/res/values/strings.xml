@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">Unit Converter</string>
+    <string name="app_name">Numbers</string>
+    <string name="first_tab">Stuff</string>
+    <string name="second_tab">Things</string>
 
     <string-array name="type_array">
         <item>Mass</item>
