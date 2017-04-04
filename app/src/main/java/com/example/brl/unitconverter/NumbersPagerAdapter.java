@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.brl.unitconverter.counter.CounterFragment;
+
 /**
  * Created by BRL on 25/03/17.
  */
@@ -16,7 +18,14 @@ public class NumbersPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new ConverterFragment();
+        switch (position) {
+            case 0:
+                return new ConverterFragment();
+            case 1:
+                return new CounterFragment();
+            default:
+                return null;
+        }
     }
 
     @Override

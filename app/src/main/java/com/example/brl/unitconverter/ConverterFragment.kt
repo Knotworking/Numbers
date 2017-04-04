@@ -25,17 +25,11 @@ import com.example.brl.unitconverter.Constants.TYPE_TEMPERATURE
 
 class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
-//    internal var typeSpinner: Spinner? = null
-//    internal var inputSpinner: Spinner? = null
-//    internal var outputSpinner: Spinner? = null
     internal var typeAdapter: ArrayAdapter<CharSequence>? = null
     internal var massAdapter: ArrayAdapter<CharSequence>? = null
     internal var temperatureAdapter: ArrayAdapter<CharSequence>? = null
     internal var distanceAdapter: ArrayAdapter<CharSequence>? = null
     internal var currencyAdapter: ArrayAdapter<CharSequence>? = null
-
-//    internal var inputEditText: EditText? = null
-//    internal var outputEditText: EditText? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_converter, container, false)
