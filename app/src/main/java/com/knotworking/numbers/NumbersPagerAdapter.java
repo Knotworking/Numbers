@@ -1,10 +1,10 @@
-package com.example.brl.unitconverter;
+package com.knotworking.numbers;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.brl.unitconverter.counter.CounterFragment;
+import com.knotworking.numbers.counter.CounterFragment;
 
 /**
  * Created by BRL on 25/03/17.

@@ -1,4 +1,4 @@
-package com.example.brl.unitconverter
+package com.knotworking.numbers
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -14,14 +14,15 @@ import android.widget.Spinner
 
 import kotlinx.android.synthetic.main.fragment_converter.*
 
-import com.example.brl.unitconverter.Constants.MASS_G
-import com.example.brl.unitconverter.Constants.MASS_OZ
-import com.example.brl.unitconverter.Constants.TEMP_C
-import com.example.brl.unitconverter.Constants.TEMP_F
-import com.example.brl.unitconverter.Constants.TYPE_CURRENCY
-import com.example.brl.unitconverter.Constants.TYPE_DISTANCE
-import com.example.brl.unitconverter.Constants.TYPE_MASS
-import com.example.brl.unitconverter.Constants.TYPE_TEMPERATURE
+import com.knotworking.numbers.Constants.MASS_G
+import com.knotworking.numbers.Constants.MASS_OZ
+import com.knotworking.numbers.Constants.TEMP_C
+import com.knotworking.numbers.Constants.TEMP_F
+import com.knotworking.numbers.Constants.TYPE_CURRENCY
+import com.knotworking.numbers.Constants.TYPE_DISTANCE
+import com.knotworking.numbers.Constants.TYPE_MASS
+import com.knotworking.numbers.Constants.TYPE_TEMPERATURE
+import com.knotworking.numbers.R
 
 class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 

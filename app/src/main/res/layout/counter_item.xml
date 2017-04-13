@@ -4,7 +4,7 @@
 
         <variable
             name="item"
-            type="com.example.brl.unitconverter.counter.CounterItem" />
+            type="com.knotworking.numbers.counter.CounterItem" />
     </data>
 
     <LinearLayout

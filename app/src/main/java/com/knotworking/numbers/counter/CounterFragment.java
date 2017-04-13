@@ -1,4 +1,4 @@
-package com.example.brl.unitconverter.counter;
+package com.knotworking.numbers.counter;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.brl.unitconverter.R;
+import com.knotworking.numbers.R;
 
 import java.util.ArrayList;
 import java.util.List;

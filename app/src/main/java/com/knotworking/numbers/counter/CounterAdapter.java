@@ -1,4 +1,4 @@
-package com.example.brl.unitconverter.counter;
+package com.knotworking.numbers.counter;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.brl.unitconverter.R;
-import com.example.brl.unitconverter.databinding.CounterItemBinding;
+import com.knotworking.numbers.R;
+import com.knotworking.numbers.databinding.CounterItemBinding;
 
 import java.util.List;
 

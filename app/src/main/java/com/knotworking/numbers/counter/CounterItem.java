@@ -1,4 +1,4 @@
-package com.example.brl.unitconverter.counter;
+package com.knotworking.numbers.counter;
 
 public class CounterItem {
     private String title;

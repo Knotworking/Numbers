@@ -1,4 +1,4 @@
-package com.example.brl.unitconverter;
+package com.knotworking.numbers;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,4 +1,4 @@
-package com.example.brl.unitconverter;
+package com.knotworking.numbers;
 
 /**
  * Created by BRL on 25/03/17.

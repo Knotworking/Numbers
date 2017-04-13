@@ -1,4 +1,4 @@
-package com.example.brl.unitconverter;
+package com.knotworking.numbers;
 
 import org.junit.Test;
 

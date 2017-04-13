@@ -1,6 +1,6 @@
-package com.example.brl.unitconverter;
+package com.knotworking.numbers;
 
-import static com.example.brl.unitconverter.Constants.*;
+import static com.knotworking.numbers.Constants.*;
 
 /**
  * Created by BRL on 25/03/17.

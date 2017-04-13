@@ -1,4 +1,4 @@
-package com.example.brl.unitconverter.database;
+package com.knotworking.numbers.database;
 
 import android.content.ContentResolver;
 import android.net.Uri;
