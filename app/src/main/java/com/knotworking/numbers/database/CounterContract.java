@@ -23,9 +23,9 @@ public class CounterContract {
 
         public static final String CREATE_TABLE =
                 "CREATE TABLE " + Counters.TABLE + " (" +
-                        Counters._ID + " INTEGER PRIMARY KEY," +
-                        Counters.NAME + " TEXT," +
-                        Counters.COUNT + " INTEGER)";
+                        _ID + " INTEGER PRIMARY KEY," +
+                        NAME + " TEXT," +
+                        COUNT + " INTEGER DEFAULT 0)";
 
         public static final String DELETE_TABLE =
                 "DROP TABLE IF EXISTS " + Counters.TABLE;

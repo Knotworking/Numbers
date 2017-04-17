@@ -1,9 +1,13 @@
 package com.knotworking.numbers.database;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,36 +33,111 @@ public class CounterProvider extends ContentProvider {
                 COUNTER_ID);
     }
 
+    private CounterDbHelper helper;
+
     @Override
     public boolean onCreate() {
-        return false;
+        helper = new CounterDbHelper(getContext());
+        return true;
     }
 
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        return null;
+        SQLiteDatabase db = helper.getReadableDatabase();
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+        switch (URI_MATCHER.match(uri)) {
+            case COUNTER_LIST:
+                builder.setTables(CounterContract.Counters.TABLE);
+                break;
+            case COUNTER_ID:
+                builder.setTables(CounterContract.Counters.TABLE);
+                selection = CounterContract.Counters.TABLE + "." + CounterContract.Counters._ID;
+                selectionArgs = new String[]{uri.getLastPathSegment()};
+                break;
+            default:
+                throw new IllegalArgumentException("Failed to query URI: " + uri);
+        }
+
+        Cursor cursor = builder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return cursor;
     }
 
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        return null;
+        switch (URI_MATCHER.match(uri)) {
+            case COUNTER_LIST:
+                return CounterContract.Counters.CONTENT_TYPE;
+            case COUNTER_ID:
+                return CounterContract.Counters.CONTENT_ITEM_TYPE;
+            default:
+                throw null;
+        }
     }
 
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        return null;
+        SQLiteDatabase db = helper.getWritableDatabase();
+        long id;
+        switch (URI_MATCHER.match(uri)) {
+            case COUNTER_LIST:
+                id = db.insertWithOnConflict(CounterContract.Counters.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+//                getContext().getContentResolver().notifyChange(uri, null);
+                break;
+            default:
+                throw new IllegalArgumentException("Failed to insert into URI: " + uri);
+        }
+        return getUriForId(id, uri);
     }
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        switch (URI_MATCHER.match(uri)) {
+            case COUNTER_LIST:
+                return db.delete(CounterContract.Counters.TABLE, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Failed to delete from URI: " + uri);
+        }
     }
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        SQLiteDatabase db = helper.getReadableDatabase();
+        int count;
+
+        switch (URI_MATCHER.match(uri)) {
+            case COUNTER_LIST:
+                count = db.update(CounterContract.Counters.TABLE, values, selection, selectionArgs);
+                break;
+            case COUNTER_ID:
+                selection = CounterContract.Counters.TABLE + "." + CounterContract.Counters._ID + "=?";
+                selectionArgs = new String[]{uri.getLastPathSegment()};
+                count = db.update(CounterContract.Counters.TABLE, values, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Failed to update URI: " + uri);
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+        return count;
+    }
+
+    private Uri getUriForId(long id, Uri uri) {
+        if (id > 0) {
+            Uri itemUri = ContentUris.withAppendedId(uri, id);
+            getContext().getContentResolver().notifyChange(itemUri, null);
+            return itemUri;
+        } else if (id == -1) {
+            //happens when insertOnConflict IGNORE
+            return uri;
+        }
+        throw new SQLException(
+                "Problem while inserting into uri: " + uri);
     }
 }

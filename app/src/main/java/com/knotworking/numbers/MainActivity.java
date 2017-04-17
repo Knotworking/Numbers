@@ -1,27 +1,39 @@
 package com.knotworking.numbers;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+import com.knotworking.numbers.database.DatabaseHelper;
+import com.knotworking.numbers.database.DatabaseHelperImpl;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    NumbersPagerAdapter adapter;
-    ViewPager pager;
+    private NumbersPagerAdapter adapter;
+    private ViewPager pager;
+    private FloatingActionButton fab;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        databaseHelper = new DatabaseHelperImpl(this);
+
         adapter = new NumbersPagerAdapter(getSupportFragmentManager());
 
         pager = (ViewPager)findViewById(R.id.activity_view_pager);
         pager.setAdapter(adapter);
+
+        fab = (FloatingActionButton)findViewById(R.id.activity_fab);
+        fab.setOnClickListener(this);
 
         setupActionBar();
 
@@ -71,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
             default:
                 Log.e(TAG, "tab position not recognised");
                 return 0;
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.activity_fab) {
+            databaseHelper.addCounterEntry("test item");
         }
     }
 }

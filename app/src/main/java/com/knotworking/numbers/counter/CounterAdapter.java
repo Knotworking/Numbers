@@ -40,7 +40,7 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data != null? data.size() : 0;
     }
 
     // Provide a reference to the views for each data item

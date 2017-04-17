@@ -1,15 +1,15 @@
 package com.knotworking.numbers.counter;
 
 public class CounterItem {
-    private String title;
+    private String name;
     private int count;
 
     public CounterItem() {
     }
 
-    public CounterItem(String title, int count) {
+    public CounterItem(String name, int count) {
         this.count = count;
-        this.title = title;
+        this.name = name;
     }
 
     public int getCount() {
@@ -20,11 +20,11 @@ public class CounterItem {
         this.count = count;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 }
