@@ -86,7 +86,6 @@ public class CounterProvider extends ContentProvider {
         switch (URI_MATCHER.match(uri)) {
             case COUNTER_LIST:
                 id = db.insertWithOnConflict(CounterContract.Counters.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-//                getContext().getContentResolver().notifyChange(uri, null);
                 break;
             default:
                 throw new IllegalArgumentException("Failed to insert into URI: " + uri);
@@ -98,12 +97,26 @@ public class CounterProvider extends ContentProvider {
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
+        int deleted;
+
         switch (URI_MATCHER.match(uri)) {
             case COUNTER_LIST:
-                return db.delete(CounterContract.Counters.TABLE, selection, selectionArgs);
+                deleted = db.delete(CounterContract.Counters.TABLE, selection, selectionArgs);
+                break;
+            case COUNTER_ID:
+                selection = CounterContract.Counters._ID + "=?";
+                selectionArgs = new String[]{uri.getLastPathSegment()};
+                deleted = db.delete(CounterContract.Counters.TABLE, selection, selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("Failed to delete from URI: " + uri);
         }
+
+        if (deleted > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return deleted;
     }
 
     @Override

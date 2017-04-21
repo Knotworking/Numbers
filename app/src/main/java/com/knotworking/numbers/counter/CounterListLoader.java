@@ -76,7 +76,6 @@ public class CounterListLoader extends AsyncTaskLoader<List<CounterItem>> {
                 } else {
                     data = null;
                 }
-                cursor.close();
             } catch (RuntimeException ex) {
                 cursor.close();
                 throw ex;

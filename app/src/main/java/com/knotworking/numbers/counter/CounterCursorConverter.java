@@ -22,9 +22,10 @@ public class CounterCursorConverter {
 
         if (cursor.moveToFirst()) {
             do {
+                int id = cursor.getInt(cursor.getColumnIndex(CounterContract.Counters._ID));
                 String entryName = cursor.getString(cursor.getColumnIndex(CounterContract.Counters.NAME));
                 int entryCount = cursor.getInt(cursor.getColumnIndex(CounterContract.Counters.COUNT));
-                counterItems.add(new CounterItem(entryName, entryCount));
+                counterItems.add(new CounterItem(id, entryName, entryCount));
             } while (cursor.moveToNext());
         }
 

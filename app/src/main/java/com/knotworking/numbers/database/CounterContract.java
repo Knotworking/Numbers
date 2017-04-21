@@ -12,7 +12,7 @@ public class CounterContract {
 
     private CounterContract() {}
 
-    public static final String AUTHORITY = "com.example.unitconverter";
+    public static final String AUTHORITY = "com.knotworking.numbers";
 
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 

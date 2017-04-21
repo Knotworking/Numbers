@@ -21,8 +21,8 @@
 
         <provider
             android:name=".database.CounterProvider"
-            android:authorities="com.example.unitconverter"
-            android:exported="true"
+            android:authorities="com.knotworking.numbers"
+            android:exported="false"
             android:label="Counters" />
     </application>
 

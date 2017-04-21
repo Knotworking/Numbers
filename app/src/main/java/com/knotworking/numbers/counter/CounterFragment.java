@@ -38,26 +38,17 @@ public class CounterFragment extends Fragment implements LoaderManager.LoaderCal
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new CounterAdapter();
-//        adapter.setData(getDummyData());
+        adapter = new CounterAdapter(getContext());
         recyclerView.setAdapter(adapter);
 
         getLoaderManager().initLoader(COUNTER_LOADER, null, CounterFragment.this);
     }
 
-//    private List<CounterItem> getDummyData() {
-//        List<CounterItem> data = new ArrayList<>();
-//
-//        data.add(new CounterItem("Snakes", 500));
-//        data.add(new CounterItem("Bottles of beer on the wall", 99));
-//        data.add(new CounterItem("High fives", 0));
-//        return data;
-//    }
-
     @Override
     public Loader<List<CounterItem>> onCreateLoader(int id, Bundle args) {
         Uri uri = CounterContract.Counters.CONTENT_URI;
         String[] projection = new String[]{
+                CounterContract.Counters._ID,
                 CounterContract.Counters.NAME,
                 CounterContract.Counters.COUNT};
         return new CounterListLoader(getActivity(), uri, projection, null, null, null);
@@ -75,6 +66,6 @@ public class CounterFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public void onLoaderReset(Loader<List<CounterItem>> loader) {
-
+        adapter.setData(null);
     }
 }
