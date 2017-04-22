@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
 
         <variable
@@ -11,41 +12,51 @@
             type="com.knotworking.numbers.counter.CounterActions" />
     </data>
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:onLongClick="@{view -> actions.deleteCounterItem(item.id)}">
+        app:cardElevation="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="minus"
-            android:padding="20dp"
-            android:onClick="@{view -> actions.decrementCount(item.id)}"/>
+            android:orientation="horizontal"
+            android:padding="4dp"
+            android:onLongClick="@{view -> actions.deleteCounterItem(item.id)}">
 
-        <TextView
-            android:id="@+id/counter_item_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="20dp"
-            android:text="@{item.name + item.id}"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="minus"
+                android:padding="20dp"
+                android:onClick="@{view -> actions.decrementCount(item.id)}"/>
 
-        <TextView
-            android:id="@+id/counter_item_count"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="20dp"
-            android:text="@{Integer.toString(item.count)}"/>
+            <TextView
+                android:id="@+id/counter_item_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="20dp"
+                android:text="@{item.name + item.id}"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="plus"
-            android:padding="20dp"
-            android:onClick="@{view -> actions.incrementCount(item.id)}"/>
+            <TextView
+                android:id="@+id/counter_item_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="20dp"
+                android:text="@{Integer.toString(item.count)}"/>
 
-    </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="plus"
+                android:padding="20dp"
+                android:onClick="@{view -> actions.incrementCount(item.id)}"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </layout>

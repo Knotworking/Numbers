@@ -2,12 +2,12 @@ package com.knotworking.numbers.counter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.knotworking.numbers.R;
-import com.knotworking.numbers.database.DatabaseHelper;
 import com.knotworking.numbers.databinding.CounterItemBinding;
 
 import java.util.List;
@@ -28,10 +28,13 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
     }
 
     public void setData(List<CounterItem> counterItems) {
-        data = counterItems;
-        if (data != null) {
-            notifyDataSetChanged();
+        if (counterItems == null) {
+            this.data = null;
+            return;
         }
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CounterDiffCallback(this.data, counterItems));
+        this.data = counterItems;
+        diffResult.dispatchUpdatesTo(this);
     }
 
     @Override
@@ -49,6 +52,11 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
     @Override
     public int getItemCount() {
         return data != null? data.size() : 0;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return data.get(position).getId();
     }
 
     // Provide a reference to the views for each data item
