@@ -5,5 +5,9 @@ package com.knotworking.numbers.counter;
  */
 
 public interface CounterActions {
-    boolean deleteItem(int id);
+    boolean deleteCounterItem(int id);
+
+    void incrementCount(int id);
+
+    void decrementCount(int id);
 }

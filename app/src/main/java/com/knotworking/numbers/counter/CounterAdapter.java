@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.knotworking.numbers.R;
+import com.knotworking.numbers.database.DatabaseHelper;
 import com.knotworking.numbers.databinding.CounterItemBinding;
 
 import java.util.List;

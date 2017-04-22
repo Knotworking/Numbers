@@ -53,7 +53,7 @@ public class CounterProvider extends ContentProvider {
                 break;
             case COUNTER_ID:
                 builder.setTables(CounterContract.Counters.TABLE);
-                selection = CounterContract.Counters.TABLE + "." + CounterContract.Counters._ID;
+                selection = CounterContract.Counters._ID + "=?";
                 selectionArgs = new String[]{uri.getLastPathSegment()};
                 break;
             default:

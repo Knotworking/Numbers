@@ -49,8 +49,8 @@ public class CounterFragment extends Fragment implements LoaderManager.LoaderCal
         Uri uri = CounterContract.Counters.CONTENT_URI;
         String[] projection = new String[]{
                 CounterContract.Counters._ID,
-                CounterContract.Counters.NAME,
-                CounterContract.Counters.COUNT};
+                CounterContract.Counters.COL_NAME,
+                CounterContract.Counters.COL_COUNT};
         return new CounterListLoader(getActivity(), uri, projection, null, null, null);
     }
 

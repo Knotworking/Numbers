@@ -18,14 +18,14 @@ public class CounterContract {
 
     public static class Counters implements BaseColumns {
         public static final String TABLE = "counters";
-        public static final String NAME = "name";
-        public static final String COUNT = "count";
+        public static final String COL_NAME = "name";
+        public static final String COL_COUNT = "count";
 
         public static final String CREATE_TABLE =
                 "CREATE TABLE " + Counters.TABLE + " (" +
                         _ID + " INTEGER PRIMARY KEY," +
-                        NAME + " TEXT," +
-                        COUNT + " INTEGER DEFAULT 0)";
+                        COL_NAME + " TEXT," +
+                        COL_COUNT + " INTEGER DEFAULT 0)";
 
         public static final String DELETE_TABLE =
                 "DROP TABLE IF EXISTS " + Counters.TABLE;

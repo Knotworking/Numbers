@@ -15,13 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:onLongClick="@{view -> actions.deleteItem(item.id)}">
+        android:onLongClick="@{view -> actions.deleteCounterItem(item.id)}">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="minus"
-            android:padding="20dp"/>
+            android:padding="20dp"
+            android:onClick="@{view -> actions.decrementCount(item.id)}"/>
 
         <TextView
             android:id="@+id/counter_item_title"
@@ -43,7 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="plus"
-            android:padding="20dp"/>
+            android:padding="20dp"
+            android:onClick="@{view -> actions.incrementCount(item.id)}"/>
 
     </LinearLayout>
 </layout>

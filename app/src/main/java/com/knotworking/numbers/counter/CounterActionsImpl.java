@@ -1,9 +1,9 @@
 package com.knotworking.numbers.counter;
 
 import android.content.Context;
-import android.net.Uri;
 
-import com.knotworking.numbers.database.CounterContract;
+import com.knotworking.numbers.database.DatabaseHelper;
+import com.knotworking.numbers.database.DatabaseHelperImpl;
 
 /**
  * Created by BRL on 20/04/17.
@@ -12,16 +12,27 @@ import com.knotworking.numbers.database.CounterContract;
 public class CounterActionsImpl implements CounterActions {
 
     private Context context;
+    private DatabaseHelper databaseHelper;
 
     public CounterActionsImpl(Context context) {
         this.context = context;
+        this.databaseHelper = new DatabaseHelperImpl(context);
     }
 
     @Override
-    public boolean deleteItem(int id) {
-        Uri uri = Uri.withAppendedPath(CounterContract.Counters.CONTENT_URI, Integer.toString(id));
-        context.getContentResolver().delete(uri, null, null);
+    public boolean deleteCounterItem(int id) {
+        databaseHelper.deleteCounterItem(id);
         return true;
+    }
+
+    @Override
+    public void incrementCount(int id) {
+        databaseHelper.modifyCount(id, 1);
+    }
+
+    @Override
+    public void decrementCount(int id) {
+        databaseHelper.modifyCount(id, -1);
     }
 
 }
