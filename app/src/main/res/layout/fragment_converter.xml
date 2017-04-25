@@ -73,4 +73,25 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/fragment_converter_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_converter_output_layout"
+        android:layout_marginTop="10dp"
+        android:text="Save"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#ececec"
+        android:gravity="center"
+        android:text="History list here"
+        android:layout_below="@id/fragment_converter_save_button"
+        android:layout_alignParentBottom="true"/>
+
 </RelativeLayout>

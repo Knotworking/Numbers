@@ -12,6 +12,9 @@ import android.view.View;
 import com.knotworking.numbers.database.DatabaseHelper;
 import com.knotworking.numbers.database.DatabaseHelperImpl;
 
+import static com.knotworking.numbers.Constants.CONVERTER_TAB;
+import static com.knotworking.numbers.Constants.COUNTER_TAB;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -48,6 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
                 pager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == COUNTER_TAB) {
+                    fab.show();
+                } else {
+                    fab.hide();
+                }
             }
 
             @Override
@@ -77,9 +85,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private int getTabTitle(int position) {
         switch (position) {
-            case 0:
+            case CONVERTER_TAB:
                 return R.string.first_tab;
-            case 1:
+            case COUNTER_TAB:
                 return R.string.second_tab;
             default:
                 Log.e(TAG, "tab position not recognised");

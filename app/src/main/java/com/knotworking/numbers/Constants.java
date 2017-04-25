@@ -30,4 +30,8 @@ public class Constants {
     public static final int GBP = 1;
     public static final int USD = 2;
     public static final int JPY = 3;
+
+    //Tabs
+    public static final int CONVERTER_TAB = 0;
+    public static final int COUNTER_TAB = 1;
 }

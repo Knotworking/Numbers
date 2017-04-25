@@ -21,6 +21,7 @@
         android:tint="@android:color/white"
         app:layout_anchor="@id/activity_view_pager"
         app:layout_anchorGravity="bottom|right|end"
-        app:layout_behavior="com.knotworking.numbers.SwipeFabBehaviour"/>
+        app:layout_behavior="com.knotworking.numbers.SwipeFabBehaviour"
+        android:visibility="invisible"/>
 
 </android.support.design.widget.CoordinatorLayout>
