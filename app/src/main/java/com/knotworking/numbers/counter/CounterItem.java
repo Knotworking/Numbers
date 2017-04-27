@@ -1,12 +1,14 @@
 package com.knotworking.numbers.counter;
 
-public class CounterItem {
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.knotworking.numbers.BR;
+
+public class CounterItem extends BaseObservable {
     private int id;
     private String name;
     private int count;
-
-    public CounterItem() {
-    }
 
     public CounterItem(int id, String name, int count) {
         this.id = id;
@@ -22,14 +24,17 @@ public class CounterItem {
         this.id = id;
     }
 
+    @Bindable
     public int getCount() {
         return count;
     }
 
     public void setCount(int count) {
         this.count = count;
+        notifyPropertyChanged(BR.count);
     }
 
+    @Bindable
     public String getName() {
         return name;
     }
@@ -43,10 +48,8 @@ public class CounterItem {
         if (this == obj) return true;
         if (!(obj instanceof CounterItem)) return false;
 
-        CounterItem item = (CounterItem)obj;
+        CounterItem item = (CounterItem) obj;
 
-        if (!name.equals(item.getName())) return false;
-        if (count != item.getCount()) return false;
         return id == item.getId();
     }
 }
