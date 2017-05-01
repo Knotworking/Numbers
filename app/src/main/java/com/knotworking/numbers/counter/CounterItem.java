@@ -49,6 +49,8 @@ public class CounterItem extends BaseObservable {
         if (!(obj instanceof CounterItem)) return false;
 
         CounterItem item = (CounterItem) obj;
+        if (!this.getName().equals(item.getName())) return false;
+        if (this.getCount() != item.getCount()) return false;
 
         return id == item.getId();
     }

@@ -5,7 +5,7 @@ package com.knotworking.numbers.counter;
  */
 
 public interface CounterActions {
-    boolean deleteCounterItem(int id);
+    boolean itemLongClick(int id);
 
     void incrementCount(int id);
 

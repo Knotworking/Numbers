@@ -37,14 +37,6 @@ public class CounterDiffCallback extends DiffUtil.Callback {
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         CounterItem oldItem = oldList.get(oldItemPosition);
         CounterItem newItem = newList.get(newItemPosition);
-
-        boolean equals = oldItem.equals(newItem);
-        boolean countEquals = oldItem.getCount() == newItem.getCount();
-
-        if (equals && !countEquals) {
-            oldItem.setCount(newItem.getCount());
-        }
-
-        return equals;
+        return oldItem.equals(newItem);
     }
 }

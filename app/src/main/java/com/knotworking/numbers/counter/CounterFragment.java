@@ -38,7 +38,8 @@ public class CounterFragment extends Fragment implements LoaderManager.LoaderCal
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new CounterAdapter(getContext());
+        recyclerView.getItemAnimator().setChangeDuration(0);
+        adapter = new CounterAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
         getLoaderManager().initLoader(COUNTER_LOADER, null, CounterFragment.this);

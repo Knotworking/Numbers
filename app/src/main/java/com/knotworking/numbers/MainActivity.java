@@ -2,6 +2,7 @@ package com.knotworking.numbers;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.knotworking.numbers.counter.CreateItemDialog;
 import com.knotworking.numbers.database.DatabaseHelper;
 import com.knotworking.numbers.database.DatabaseHelperImpl;
 
@@ -17,6 +19,7 @@ import static com.knotworking.numbers.Constants.COUNTER_TAB;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String NEW_ITEM_DIALOG = "new_item_dialog";
 
     private NumbersPagerAdapter adapter;
     private ViewPager pager;
@@ -29,12 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         databaseHelper = new DatabaseHelperImpl(this);
-
         adapter = new NumbersPagerAdapter(getSupportFragmentManager());
-
         pager = (ViewPager)findViewById(R.id.activity_view_pager);
         pager.setAdapter(adapter);
-
         fab = (FloatingActionButton)findViewById(R.id.activity_fab);
         fab.setOnClickListener(this);
 
@@ -98,7 +98,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.activity_fab) {
-            databaseHelper.addCounterEntry("test item");
+            showNewItemDialog();
         }
+    }
+
+    private void showNewItemDialog() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(NEW_ITEM_DIALOG);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        CreateItemDialog dialog = new CreateItemDialog();
+        dialog.show(ft, NEW_ITEM_DIALOG);
     }
 }
