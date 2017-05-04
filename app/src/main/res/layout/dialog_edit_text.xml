@@ -9,7 +9,6 @@
     <EditText
         android:id="@+id/dialog_create_counter_item_editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/new_item_dialog_hint" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

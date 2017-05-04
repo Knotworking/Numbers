@@ -45,7 +45,7 @@ public class DeleteItemDialog extends DialogFragment {
                 databaseHelper.deleteCounterItem(id);
             }
 
-        }).setNegativeButton(R.string.delete_item_dialog_negative_button, new DialogInterface.OnClickListener() {
+        }).setNegativeButton(R.string.dialog_button_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

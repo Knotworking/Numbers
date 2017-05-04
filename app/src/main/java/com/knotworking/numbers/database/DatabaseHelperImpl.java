@@ -39,6 +39,16 @@ public class DatabaseHelperImpl implements DatabaseHelper {
         context.getContentResolver().update(uri, values, null, null);
     }
 
+    @Override
+    public void modifyName(int id, String newName) {
+        Uri uri = Uri.withAppendedPath(CounterContract.Counters.CONTENT_URI, Integer.toString(id));
+
+        ContentValues values = new ContentValues();
+        values.put(CounterContract.Counters.COL_NAME, newName);
+
+        context.getContentResolver().update(uri, values, null, null);
+    }
+
     private int getItemCount(int id) {
         Uri uri = Uri.withAppendedPath(CounterContract.Counters.CONTENT_URI, Integer.toString(id));
         String[] projection = new String[]{CounterContract.Counters.COL_COUNT};

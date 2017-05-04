@@ -15,32 +15,48 @@ import com.knotworking.numbers.database.DatabaseHelper;
 import com.knotworking.numbers.database.DatabaseHelperImpl;
 
 /**
- * Created by BRL on 01/05/17.
+ * Created by BRL on 04/05/17.
  */
 
-public class CreateItemDialog extends DialogFragment {
+public class EditItemDialog extends DialogFragment{
+    private static final String ARG_ID = "id";
+    private static final String ARG_NAME = "name";
+
     private DatabaseHelper databaseHelper;
+
+    public static EditItemDialog newInstance(int id, String name) {
+        Bundle args = new Bundle();
+        args.putInt(ARG_ID, id);
+        args.putString(ARG_NAME, name);
+        EditItemDialog dialogFragment = new EditItemDialog();
+        dialogFragment.setArguments(args);
+        return dialogFragment;
+    }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        databaseHelper = new DatabaseHelperImpl(getContext());
+        Bundle arguments = getArguments();
+        final int id = arguments.getInt(ARG_ID);
+        String currentName = arguments.getString(ARG_NAME);
+
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View layout = inflater.inflate(R.layout.dialog_edit_text, null);
         final EditText editText = (EditText)layout.findViewById(R.id.dialog_create_counter_item_editText);
         editText.setHint(R.string.new_item_dialog_hint);
-
-        databaseHelper = new DatabaseHelperImpl(getContext());
+        editText.setText(currentName);
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.new_item_dialog_title)
+                .setTitle(R.string.edit_item_dialog_title)
                 .setView(layout)
-                .setPositiveButton(R.string.new_item_dialog_positive_button, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.edit_item_dialog_positive_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        databaseHelper.addCounterEntry(editText.getText().toString());
+                        databaseHelper.modifyName(id, editText.getText().toString());
                     }
-                })
-                .setNegativeButton(R.string.dialog_button_cancel, new DialogInterface.OnClickListener() {
+
+                }).setNegativeButton(R.string.dialog_button_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

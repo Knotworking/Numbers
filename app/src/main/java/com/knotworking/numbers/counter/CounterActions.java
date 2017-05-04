@@ -7,6 +7,8 @@ package com.knotworking.numbers.counter;
 public interface CounterActions {
     boolean itemLongClick(int id);
 
+    boolean nameLongClick(int id, String name);
+
     void incrementCount(int id);
 
     void decrementCount(int id);

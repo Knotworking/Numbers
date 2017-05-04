@@ -7,4 +7,6 @@ public interface DatabaseHelper {
     void deleteCounterItem(int id);
 
     void modifyCount(int id, int change);
+
+    void modifyName(int id, String newName);
 }
