@@ -22,14 +22,15 @@ public class Constants {
     public static final int TEMP_F = 1;
 
     //Distance
-    public static final int DIST_M = 0;
-    public static final int DIST_KM = 1;
+    public static final int DIST_MI = 0;
+    public static final int DIST_F = 1;
+    public static final int DIST_KM = 2;
+    public static final int DIST_M = 3;
 
     //Currency
     public static final int EUR = 0;
     public static final int GBP = 1;
     public static final int USD = 2;
-    public static final int JPY = 3;
 
     //Tabs
     public static final int CONVERTER_TAB = 0;

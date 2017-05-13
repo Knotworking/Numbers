@@ -9,20 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.Spinner
-
+import com.knotworking.numbers.Constants.*
 import kotlinx.android.synthetic.main.fragment_converter.*
-
-import com.knotworking.numbers.Constants.MASS_G
-import com.knotworking.numbers.Constants.MASS_OZ
-import com.knotworking.numbers.Constants.TEMP_C
-import com.knotworking.numbers.Constants.TEMP_F
-import com.knotworking.numbers.Constants.TYPE_CURRENCY
-import com.knotworking.numbers.Constants.TYPE_DISTANCE
-import com.knotworking.numbers.Constants.TYPE_MASS
-import com.knotworking.numbers.Constants.TYPE_TEMPERATURE
-import com.knotworking.numbers.R
 
 class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -98,7 +87,7 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         when (parent?.id) {
             R.id.fragment_converter_type_spinner -> handleTypeSelected(position)
             R.id.fragment_converter_input_spinner -> parametersChanged(true)
-            R.id.fragment_converter_output_spinner -> parametersChanged(false)
+            R.id.fragment_converter_output_spinner -> parametersChanged(true)
         }
     }
 
@@ -126,29 +115,40 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 fragment_converter_output_spinner.setSelection(TEMP_F)
             }
             TYPE_DISTANCE -> {
+                fragment_converter_input_spinner.adapter = distanceAdapter
+                fragment_converter_input_spinner.setSelection(DIST_MI)
+                fragment_converter_output_spinner.adapter = distanceAdapter
+                fragment_converter_output_spinner.setSelection(DIST_KM)
             }
             TYPE_CURRENCY -> {
             }
         }
     }
 
-    private fun parametersChanged(inputChanged: Boolean) {
+    private fun parametersChanged(updateOutput: Boolean) {
+        val inputUnitCode = if (updateOutput) fragment_converter_input_spinner.selectedItemPosition else fragment_converter_output_spinner.selectedItemPosition
+        val outputUnitCode = if (updateOutput) fragment_converter_output_spinner.selectedItemPosition else fragment_converter_input_spinner.selectedItemPosition
+        val inputEditText = if (updateOutput) fragment_converter_input_editText else fragment_converter_output_editText
+        val outputEditText = if (updateOutput) fragment_converter_output_editText else fragment_converter_input_editText
+        var input = Utils.getFloatFromString(inputEditText.text.toString())
+        var output = 0f
+
         when (fragment_converter_type_spinner.selectedItemPosition) {
-            TYPE_MASS -> if (inputChanged) {
-                val input = Utils.toGrams(fragment_converter_input_spinner.selectedItemPosition, Utils.getFloatFromString(fragment_converter_input_editText.text.toString()))
-                val output = Utils.fromGrams(fragment_converter_output_spinner.selectedItemPosition, input)
-                fragment_converter_output_editText.setText(output.toString())
-            } else {
-                val input = Utils.toGrams(fragment_converter_output_spinner.selectedItemPosition, Utils.getFloatFromString(fragment_converter_output_editText.text.toString()))
-                val output = Utils.fromGrams(fragment_converter_input_spinner.selectedItemPosition, input)
-                fragment_converter_input_editText.setText(output.toString())
+            TYPE_MASS -> {
+                input = Utils.toGrams(inputUnitCode, input)
+                output = Utils.fromGrams(outputUnitCode, input)
             }
             TYPE_TEMPERATURE -> {
+                output = if (inputUnitCode == TEMP_C) Utils.toFahrenheit(input) else Utils.toCelsius(input)
             }
             TYPE_DISTANCE -> {
+                input = Utils.toMetres(inputUnitCode, input)
+                output = Utils.fromMetres(outputUnitCode, input)
             }
             TYPE_CURRENCY -> {
             }
         }
+
+        outputEditText.setText(Utils.round(output).toString())
     }
 }

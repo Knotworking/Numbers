@@ -38,9 +38,9 @@
             android:id="@+id/fragment_converter_input_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:text="1"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            android:inputType="numberSigned|numberDecimal"
+            android:text="1" />
 
         <Spinner
             android:id="@+id/fragment_converter_input_spinner"
@@ -63,7 +63,7 @@
             android:id="@+id/fragment_converter_output_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
+            android:inputType="numberSigned|numberDecimal"
             android:layout_margin="8dp"/>
 
         <Spinner
@@ -84,13 +84,13 @@
         android:textColor="@android:color/white"
         android:layout_alignParentRight="true"/>
 
-    <TextView
+    <ListView
+        android:id="@+id/fragment_converter_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="#ececec"
         android:gravity="center"
-        android:text="History list here"
         android:layout_below="@id/fragment_converter_save_button"
         android:layout_alignParentBottom="true"/>
 

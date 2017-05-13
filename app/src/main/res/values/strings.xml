@@ -33,7 +33,9 @@
 
     <string-array name="distance_array">
         <item>miles</item>
+        <item>feet</item>
         <item>km</item>
+        <item>m</item>
     </string-array>
 
     <string-array name="currency_array">
