@@ -19,7 +19,7 @@
         </activity>
 
         <provider
-            android:name=".database.CounterProvider"
+            android:name=".database.DatabaseProvider"
             android:authorities="com.knotworking.numbers"
             android:exported="false"
             android:label="Counters" />

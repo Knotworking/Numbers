@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.knotworking.numbers.R;
-import com.knotworking.numbers.database.CounterContract;
+import com.knotworking.numbers.database.DatabaseContract;
 
 import java.util.List;
 
@@ -47,11 +47,11 @@ public class CounterFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public Loader<List<CounterItem>> onCreateLoader(int id, Bundle args) {
-        Uri uri = CounterContract.Counters.CONTENT_URI;
+        Uri uri = DatabaseContract.Counters.CONTENT_URI;
         String[] projection = new String[]{
-                CounterContract.Counters._ID,
-                CounterContract.Counters.COL_NAME,
-                CounterContract.Counters.COL_COUNT};
+                DatabaseContract.Counters._ID,
+                DatabaseContract.Counters.COL_NAME,
+                DatabaseContract.Counters.COL_COUNT};
         return new CounterListLoader(getActivity(), uri, projection, null, null, null);
     }
 
