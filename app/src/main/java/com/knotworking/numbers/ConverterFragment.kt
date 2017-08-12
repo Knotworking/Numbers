@@ -139,7 +139,11 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 output = Utils.fromGrams(outputUnitCode, input)
             }
             TYPE_TEMPERATURE -> {
-                output = if (inputUnitCode == TEMP_C) Utils.toFahrenheit(input) else Utils.toCelsius(input)
+                if (inputUnitCode == outputUnitCode) {
+                    output = input;
+                } else {
+                    output = if (inputUnitCode == TEMP_C) Utils.toFahrenheit(input) else Utils.toCelsius(input)
+                }
             }
             TYPE_DISTANCE -> {
                 input = Utils.toMetres(inputUnitCode, input)
