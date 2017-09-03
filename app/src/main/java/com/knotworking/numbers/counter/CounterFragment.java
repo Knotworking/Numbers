@@ -22,7 +22,6 @@ public class CounterFragment extends Fragment implements LoaderManager.LoaderCal
 
     private RecyclerView recyclerView;
     private CounterAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     @Nullable
     @Override
@@ -36,7 +35,7 @@ public class CounterFragment extends Fragment implements LoaderManager.LoaderCal
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        layoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.getItemAnimator().setChangeDuration(0);
         adapter = new CounterAdapter(getActivity());
