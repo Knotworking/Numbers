@@ -56,12 +56,7 @@ public class CounterFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public void onLoadFinished(Loader<List<CounterItem>> loader, List<CounterItem> data) {
-        if (data == null) {
-            return;
-        }
-
         adapter.setData(data);
-
     }
 
     @Override
