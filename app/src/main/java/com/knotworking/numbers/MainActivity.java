@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.knotworking.numbers.api.CurrencyApi;
 import com.knotworking.numbers.counter.CreateItemDialog;
 import com.knotworking.numbers.database.DatabaseHelper;
 import com.knotworking.numbers.database.DatabaseHelperImpl;
@@ -24,14 +25,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private NumbersPagerAdapter adapter;
     private ViewPager pager;
     private FloatingActionButton fab;
-    private DatabaseHelper databaseHelper;
+    //TODO inject singleton
+    private CurrencyApi currencyApi = new CurrencyApi();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        databaseHelper = new DatabaseHelperImpl(this);
         adapter = new NumbersPagerAdapter(getSupportFragmentManager());
         pager = (ViewPager)findViewById(R.id.activity_view_pager);
         pager.setAdapter(adapter);
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(this);
 
         setupActionBar();
-
+        checkExchangeRates();
     }
 
     private void setupActionBar() {
@@ -112,5 +113,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         CreateItemDialog dialog = new CreateItemDialog();
         dialog.show(ft, NEW_ITEM_DIALOG);
+    }
+
+    private void checkExchangeRates() {
+        //if longer than threshold (N days?)
+        currencyApi.getExchangeRates();
     }
 }
