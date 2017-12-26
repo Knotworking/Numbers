@@ -19,6 +19,7 @@ public class DeleteItemDialog extends DialogFragment {
 
     private static final String ARG_ID = "id";
 
+    //TODO inject
     private DatabaseHelper databaseHelper;
 
     public static DeleteItemDialog newInstance(int id) {

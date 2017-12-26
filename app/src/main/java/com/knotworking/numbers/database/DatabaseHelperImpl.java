@@ -4,6 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
 
 public class DatabaseHelperImpl implements DatabaseHelper {
 
@@ -14,7 +19,7 @@ public class DatabaseHelperImpl implements DatabaseHelper {
     }
 
     @Override
-    public void addCounterEntry(String name) {
+    public void addCounterEntry(@NonNull String name) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseContract.Counters.COL_NAME, name);
 
@@ -40,7 +45,7 @@ public class DatabaseHelperImpl implements DatabaseHelper {
     }
 
     @Override
-    public void modifyName(int id, String newName) {
+    public void modifyName(int id, @NonNull String newName) {
         Uri uri = Uri.withAppendedPath(DatabaseContract.Counters.CONTENT_URI, Integer.toString(id));
 
         ContentValues values = new ContentValues();
@@ -65,4 +70,8 @@ public class DatabaseHelperImpl implements DatabaseHelper {
         return 0;
     }
 
+    @Override
+    public void saveExchangeRates(@NotNull Map<String, Float> rates) {
+        //TODO add exchange rates plus fetch timestamp (shared prefs?)
+    }
 }
