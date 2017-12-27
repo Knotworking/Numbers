@@ -10,16 +10,25 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import com.knotworking.numbers.Constants.*
+import com.knotworking.numbers.Constants.DIST_KM
+import com.knotworking.numbers.Constants.DIST_MI
+import com.knotworking.numbers.Constants.MASS_G
+import com.knotworking.numbers.Constants.MASS_OZ
+import com.knotworking.numbers.Constants.TEMP_C
+import com.knotworking.numbers.Constants.TEMP_F
+import com.knotworking.numbers.Constants.TYPE_CURRENCY
+import com.knotworking.numbers.Constants.TYPE_DISTANCE
+import com.knotworking.numbers.Constants.TYPE_MASS
+import com.knotworking.numbers.Constants.TYPE_TEMPERATURE
 import kotlinx.android.synthetic.main.fragment_converter.*
 
 class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
-    internal var typeAdapter: ArrayAdapter<CharSequence>? = null
-    internal var massAdapter: ArrayAdapter<CharSequence>? = null
-    internal var temperatureAdapter: ArrayAdapter<CharSequence>? = null
-    internal var distanceAdapter: ArrayAdapter<CharSequence>? = null
-    internal var currencyAdapter: ArrayAdapter<CharSequence>? = null
+    private var typeAdapter: ArrayAdapter<CharSequence>? = null
+    private var massAdapter: ArrayAdapter<CharSequence>? = null
+    private var temperatureAdapter: ArrayAdapter<CharSequence>? = null
+    private var distanceAdapter: ArrayAdapter<CharSequence>? = null
+    private var currencyAdapter: ArrayAdapter<CharSequence>? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_converter, container, false)
@@ -139,10 +148,10 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 output = Utils.fromGrams(outputUnitCode, input)
             }
             TYPE_TEMPERATURE -> {
-                if (inputUnitCode == outputUnitCode) {
-                    output = input;
+                output = if (inputUnitCode == outputUnitCode) {
+                    input
                 } else {
-                    output = if (inputUnitCode == TEMP_C) Utils.toFahrenheit(input) else Utils.toCelsius(input)
+                    if (inputUnitCode == TEMP_C) Utils.toFahrenheit(input) else Utils.toCelsius(input)
                 }
             }
             TYPE_DISTANCE -> {

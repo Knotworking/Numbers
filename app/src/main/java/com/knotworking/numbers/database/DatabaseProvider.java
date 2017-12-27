@@ -37,10 +37,10 @@ public class DatabaseProvider extends ContentProvider {
 
         URI_MATCHER.addURI(DatabaseContract.AUTHORITY,
                 "exchange_rates",
-                COUNTER_LIST);
+                EXCHANGE_RATE_LIST);
         URI_MATCHER.addURI(DatabaseContract.AUTHORITY,
                 "exchange_rates/*",
-                COUNTER_ID);
+                EXCHANGE_RATE_ID);
     }
 
     private DatabaseOpenHelper helper;

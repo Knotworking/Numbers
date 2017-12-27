@@ -1,14 +1,19 @@
 package com.knotworking.numbers.api
 
+import android.content.Context
 import android.util.Log
+import com.knotworking.numbers.database.DatabaseHelper
+import com.knotworking.numbers.database.DatabaseHelperImpl
 
 /**
  * Created on 04.12.17.
  */
-class CurrencyApi {
+class CurrencyApi(context: Context) {
     private val TAG = CurrencyApi::class.java.simpleName
 
     private val service: CurrencyService = RestClient.createService(CurrencyService::class.java)
+
+    private val databaseHelper: DatabaseHelper = DatabaseHelperImpl(context)
 
     fun getExchangeRates() {
         service.getLatestExchangeRates().enqueue(object : retrofit2.Callback<ExchangeRatesResponse> {
@@ -25,8 +30,9 @@ class CurrencyApi {
                         }
                     }
 
-                    //TODO store values in database
                     Log.i(TAG, it.rates.toString())
+
+                    databaseHelper.saveExchangeRates(it.rates)
                 }
             }
 

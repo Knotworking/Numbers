@@ -1,6 +1,13 @@
 package com.knotworking.numbers
 
-import com.knotworking.numbers.Constants.*
+import com.knotworking.numbers.Constants.DIST_F
+import com.knotworking.numbers.Constants.DIST_KM
+import com.knotworking.numbers.Constants.DIST_M
+import com.knotworking.numbers.Constants.DIST_MI
+import com.knotworking.numbers.Constants.MASS_G
+import com.knotworking.numbers.Constants.MASS_KG
+import com.knotworking.numbers.Constants.MASS_LBS
+import com.knotworking.numbers.Constants.MASS_OZ
 
 /**
  * Created by BRL on 25/03/17.
@@ -8,22 +15,22 @@ import com.knotworking.numbers.Constants.*
 
 object Utils {
     fun toGrams(inputUnitCode: Int, input: Float): Float {
-        when (inputUnitCode) {
-            MASS_KG -> return input * 1000
-            MASS_G -> return input
-            MASS_LBS -> return input * 453.59237f
-            MASS_OZ -> return input * 28.34952f
-            else -> return 0f
+        return when (inputUnitCode) {
+            MASS_KG -> input * 1000
+            MASS_G -> input
+            MASS_LBS -> input * 453.59237f
+            MASS_OZ -> input * 28.34952f
+            else -> 0f
         }
     }
 
     fun fromGrams(outputUnitCode: Int, grams: Float): Float {
-        when (outputUnitCode) {
-            MASS_KG -> return grams / 1000
-            MASS_G -> return grams
-            MASS_LBS -> return grams / 453.59237f
-            MASS_OZ -> return grams / 28.34952f
-            else -> return 0f
+        return when (outputUnitCode) {
+            MASS_KG -> grams / 1000
+            MASS_G -> grams
+            MASS_LBS -> grams / 453.59237f
+            MASS_OZ -> grams / 28.34952f
+            else -> 0f
         }
     }
 
@@ -36,22 +43,22 @@ object Utils {
     }
 
     fun toMetres(inputUnitCode: Int, input: Float): Float {
-        when (inputUnitCode) {
-            DIST_MI -> return input * 1609.344f
-            DIST_F -> return input * 0.3048f
-            DIST_KM -> return input * 1000
-            DIST_M -> return input
-            else -> return 0f
+        return when (inputUnitCode) {
+            DIST_MI -> input * 1609.344f
+            DIST_F -> input * 0.3048f
+            DIST_KM -> input * 1000
+            DIST_M -> input
+            else -> 0f
         }
     }
 
     fun fromMetres(outputUnitCode: Int, metres: Float): Float {
-        when (outputUnitCode) {
-            DIST_MI -> return metres / 1609.344f
-            DIST_F -> return metres / 0.3048f
-            DIST_KM -> return metres / 1000
-            DIST_M -> return metres
-            else -> return 0f
+        return when (outputUnitCode) {
+            DIST_MI -> metres / 1609.344f
+            DIST_F -> metres / 0.3048f
+            DIST_KM -> metres / 1000
+            DIST_M -> metres
+            else -> 0f
         }
     }
 
@@ -60,10 +67,10 @@ object Utils {
     }
 
     fun getFloatFromString(floatString: String): Float {
-        try {
-            return java.lang.Float.valueOf(floatString)!!
+        return try {
+            java.lang.Float.valueOf(floatString)!!
         } catch (e: Exception) {
-            return 0f
+            0f
         }
 
     }
