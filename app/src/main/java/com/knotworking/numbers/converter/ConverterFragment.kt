@@ -1,7 +1,11 @@
-package com.knotworking.numbers
+package com.knotworking.numbers.converter
 
+import android.database.Cursor
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.LoaderManager
+import android.support.v4.content.CursorLoader
+import android.support.v4.content.Loader
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -10,19 +14,25 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import com.knotworking.numbers.Constants.DIST_KM
-import com.knotworking.numbers.Constants.DIST_MI
-import com.knotworking.numbers.Constants.MASS_G
-import com.knotworking.numbers.Constants.MASS_OZ
-import com.knotworking.numbers.Constants.TEMP_C
-import com.knotworking.numbers.Constants.TEMP_F
-import com.knotworking.numbers.Constants.TYPE_CURRENCY
-import com.knotworking.numbers.Constants.TYPE_DISTANCE
-import com.knotworking.numbers.Constants.TYPE_MASS
-import com.knotworking.numbers.Constants.TYPE_TEMPERATURE
+import com.knotworking.numbers.R
+import com.knotworking.numbers.Utils
+import com.knotworking.numbers.converter.UnitCode.DIST_KM
+import com.knotworking.numbers.converter.UnitCode.DIST_MI
+import com.knotworking.numbers.converter.UnitCode.EUR
+import com.knotworking.numbers.converter.UnitCode.MASS_G
+import com.knotworking.numbers.converter.UnitCode.MASS_OZ
+import com.knotworking.numbers.converter.UnitCode.TEMP_C
+import com.knotworking.numbers.converter.UnitCode.TEMP_F
+import com.knotworking.numbers.converter.UnitCode.TYPE_CURRENCY
+import com.knotworking.numbers.converter.UnitCode.TYPE_DISTANCE
+import com.knotworking.numbers.converter.UnitCode.TYPE_MASS
+import com.knotworking.numbers.converter.UnitCode.TYPE_TEMPERATURE
+import com.knotworking.numbers.converter.UnitCode.USD
+import com.knotworking.numbers.database.DatabaseContract
 import kotlinx.android.synthetic.main.fragment_converter.*
 
-class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor> {
+    private val EXCHANGE_RATE_LOADER = 10
 
     private var typeAdapter: ArrayAdapter<CharSequence>? = null
     private var massAdapter: ArrayAdapter<CharSequence>? = null
@@ -30,8 +40,10 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private var distanceAdapter: ArrayAdapter<CharSequence>? = null
     private var currencyAdapter: ArrayAdapter<CharSequence>? = null
 
+    private var exchangeRates: Map<String, Float> = emptyMap()
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_converter, container, false)
+        return inflater?.inflate(R.layout.fragment_converter, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -43,6 +55,8 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
         setupSpinner(fragment_converter_input_spinner, massAdapter)
         setupSpinner(fragment_converter_output_spinner, massAdapter)
         setupTextWatchers()
+
+        loaderManager.initLoader(EXCHANGE_RATE_LOADER, null, this)
     }
 
 
@@ -130,6 +144,10 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 fragment_converter_output_spinner.setSelection(DIST_KM)
             }
             TYPE_CURRENCY -> {
+                fragment_converter_input_spinner.adapter = currencyAdapter
+                fragment_converter_input_spinner.setSelection(USD)
+                fragment_converter_output_spinner.adapter = currencyAdapter
+                fragment_converter_output_spinner.setSelection(EUR)
             }
         }
     }
@@ -159,9 +177,29 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 output = Utils.fromMetres(outputUnitCode, input)
             }
             TYPE_CURRENCY -> {
+                input = Utils.toUsd(inputUnitCode, input, exchangeRates)
+                output = Utils.fromUsd(outputUnitCode, input, exchangeRates)
             }
         }
 
         outputEditText.setText(Utils.round(output).toString())
+    }
+
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
+        val uri = DatabaseContract.ExchangeRates.CONTENT_URI
+        val projection = arrayOf(DatabaseContract.ExchangeRates.COL_CURRENCY,
+                DatabaseContract.ExchangeRates.COL_RATE)
+        return CursorLoader(context, uri, projection, null, null, null)
+
+    }
+
+    override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
+        data?.let {
+            exchangeRates = ExchangeRateCursorConverter.getData(it)
+        }
+    }
+
+    override fun onLoaderReset(loader: Loader<Cursor>?) {
+        exchangeRates = emptyMap()
     }
 }

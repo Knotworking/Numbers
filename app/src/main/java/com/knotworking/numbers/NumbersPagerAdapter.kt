@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.knotworking.numbers.Constants.CONVERTER_TAB
 import com.knotworking.numbers.Constants.COUNTER_TAB
+import com.knotworking.numbers.converter.ConverterFragment
 
 import com.knotworking.numbers.counter.CounterFragment
 

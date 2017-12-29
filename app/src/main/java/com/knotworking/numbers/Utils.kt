@@ -1,13 +1,17 @@
 package com.knotworking.numbers
 
-import com.knotworking.numbers.Constants.DIST_F
-import com.knotworking.numbers.Constants.DIST_KM
-import com.knotworking.numbers.Constants.DIST_M
-import com.knotworking.numbers.Constants.DIST_MI
-import com.knotworking.numbers.Constants.MASS_G
-import com.knotworking.numbers.Constants.MASS_KG
-import com.knotworking.numbers.Constants.MASS_LBS
-import com.knotworking.numbers.Constants.MASS_OZ
+import com.knotworking.numbers.converter.UnitCode.CAD
+import com.knotworking.numbers.converter.UnitCode.DIST_F
+import com.knotworking.numbers.converter.UnitCode.DIST_KM
+import com.knotworking.numbers.converter.UnitCode.DIST_M
+import com.knotworking.numbers.converter.UnitCode.DIST_MI
+import com.knotworking.numbers.converter.UnitCode.EUR
+import com.knotworking.numbers.converter.UnitCode.GBP
+import com.knotworking.numbers.converter.UnitCode.MASS_G
+import com.knotworking.numbers.converter.UnitCode.MASS_KG
+import com.knotworking.numbers.converter.UnitCode.MASS_LBS
+import com.knotworking.numbers.converter.UnitCode.MASS_OZ
+import com.knotworking.numbers.converter.UnitCode.USD
 
 /**
  * Created by BRL on 25/03/17.
@@ -58,6 +62,26 @@ object Utils {
             DIST_F -> metres / 0.3048f
             DIST_KM -> metres / 1000
             DIST_M -> metres
+            else -> 0f
+        }
+    }
+
+    fun toUsd(inputUnitCode: Int, input: Float, rates: Map<String, Float>): Float {
+        val exchangeRate = getExchangeRate(inputUnitCode, rates)
+        return input / exchangeRate
+    }
+
+    fun fromUsd(outputUnitCode: Int, usd: Float, rates: Map<String, Float>): Float {
+        val exchangeRate = getExchangeRate(outputUnitCode, rates)
+        return usd * exchangeRate
+    }
+
+    private fun getExchangeRate(currencyCode: Int, rates: Map<String, Float>): Float {
+        return when (currencyCode) {
+            EUR -> rates.getValue(Constants.EUR)
+            GBP -> rates.getValue(Constants.GBP)
+            USD -> rates.getValue(Constants.USD)
+            CAD -> rates.getValue(Constants.CAD)
             else -> 0f
         }
     }
