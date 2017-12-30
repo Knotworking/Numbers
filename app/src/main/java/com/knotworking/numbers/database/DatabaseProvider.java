@@ -16,28 +16,38 @@ import android.support.annotation.Nullable;
  * Created by BRL on 13/04/17.
  */
 
-public class CounterProvider extends ContentProvider {
+public class DatabaseProvider extends ContentProvider {
 
     private static final int COUNTER_LIST = 1;
     private static final int COUNTER_ID = 2;
+    private static final int EXCHANGE_RATE_LIST = 3;
+    private static final int EXCHANGE_RATE_ID = 4;
 
     private static final UriMatcher URI_MATCHER;
 
     static {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-        URI_MATCHER.addURI(CounterContract.AUTHORITY,
+
+        URI_MATCHER.addURI(DatabaseContract.AUTHORITY,
                 "counters",
                 COUNTER_LIST);
-        URI_MATCHER.addURI(CounterContract.AUTHORITY,
+        URI_MATCHER.addURI(DatabaseContract.AUTHORITY,
                 "counters/*",
                 COUNTER_ID);
+
+        URI_MATCHER.addURI(DatabaseContract.AUTHORITY,
+                "exchange_rates",
+                EXCHANGE_RATE_LIST);
+        URI_MATCHER.addURI(DatabaseContract.AUTHORITY,
+                "exchange_rates/*",
+                EXCHANGE_RATE_ID);
     }
 
-    private CounterDbHelper helper;
+    private DatabaseOpenHelper helper;
 
     @Override
     public boolean onCreate() {
-        helper = new CounterDbHelper(getContext());
+        helper = new DatabaseOpenHelper(getContext());
         return true;
     }
 
@@ -49,11 +59,19 @@ public class CounterProvider extends ContentProvider {
 
         switch (URI_MATCHER.match(uri)) {
             case COUNTER_LIST:
-                builder.setTables(CounterContract.Counters.TABLE);
+                builder.setTables(DatabaseContract.Counters.TABLE);
                 break;
             case COUNTER_ID:
-                builder.setTables(CounterContract.Counters.TABLE);
-                selection = CounterContract.Counters._ID + "=?";
+                builder.setTables(DatabaseContract.Counters.TABLE);
+                selection = DatabaseContract.Counters._ID + "=?";
+                selectionArgs = new String[]{uri.getLastPathSegment()};
+                break;
+            case EXCHANGE_RATE_LIST:
+                builder.setTables(DatabaseContract.ExchangeRates.TABLE);
+                break;
+            case EXCHANGE_RATE_ID:
+                builder.setTables(DatabaseContract.ExchangeRates.TABLE);
+                selection = DatabaseContract.Counters._ID + "=?";
                 selectionArgs = new String[]{uri.getLastPathSegment()};
                 break;
             default:
@@ -70,9 +88,13 @@ public class CounterProvider extends ContentProvider {
     public String getType(@NonNull Uri uri) {
         switch (URI_MATCHER.match(uri)) {
             case COUNTER_LIST:
-                return CounterContract.Counters.CONTENT_TYPE;
+                return DatabaseContract.Counters.CONTENT_TYPE;
             case COUNTER_ID:
-                return CounterContract.Counters.CONTENT_ITEM_TYPE;
+                return DatabaseContract.Counters.CONTENT_ITEM_TYPE;
+            case EXCHANGE_RATE_LIST:
+                return DatabaseContract.ExchangeRates.CONTENT_TYPE;
+            case EXCHANGE_RATE_ID:
+                return DatabaseContract.ExchangeRates.CONTENT_ITEM_TYPE;
             default:
                 throw null;
         }
@@ -85,7 +107,10 @@ public class CounterProvider extends ContentProvider {
         long id;
         switch (URI_MATCHER.match(uri)) {
             case COUNTER_LIST:
-                id = db.insertWithOnConflict(CounterContract.Counters.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+                id = db.insertWithOnConflict(DatabaseContract.Counters.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+                break;
+            case EXCHANGE_RATE_LIST:
+                id = db.insertWithOnConflict(DatabaseContract.ExchangeRates.TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
                 break;
             default:
                 throw new IllegalArgumentException("Failed to insert into URI: " + uri);
@@ -101,12 +126,20 @@ public class CounterProvider extends ContentProvider {
 
         switch (URI_MATCHER.match(uri)) {
             case COUNTER_LIST:
-                deleted = db.delete(CounterContract.Counters.TABLE, selection, selectionArgs);
+                deleted = db.delete(DatabaseContract.Counters.TABLE, selection, selectionArgs);
                 break;
             case COUNTER_ID:
-                selection = CounterContract.Counters._ID + "=?";
+                selection = DatabaseContract.Counters._ID + "=?";
                 selectionArgs = new String[]{uri.getLastPathSegment()};
-                deleted = db.delete(CounterContract.Counters.TABLE, selection, selectionArgs);
+                deleted = db.delete(DatabaseContract.Counters.TABLE, selection, selectionArgs);
+                break;
+            case EXCHANGE_RATE_LIST:
+                deleted = db.delete(DatabaseContract.ExchangeRates.TABLE, selection, selectionArgs);
+                break;
+            case EXCHANGE_RATE_ID:
+                selection = DatabaseContract.ExchangeRates._ID + "=?";
+                selectionArgs = new String[]{uri.getLastPathSegment()};
+                deleted = db.delete(DatabaseContract.ExchangeRates.TABLE, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Failed to delete from URI: " + uri);
@@ -126,12 +159,20 @@ public class CounterProvider extends ContentProvider {
 
         switch (URI_MATCHER.match(uri)) {
             case COUNTER_LIST:
-                count = db.update(CounterContract.Counters.TABLE, values, selection, selectionArgs);
+                count = db.update(DatabaseContract.Counters.TABLE, values, selection, selectionArgs);
                 break;
             case COUNTER_ID:
-                selection = CounterContract.Counters.TABLE + "." + CounterContract.Counters._ID + "=?";
+                selection = DatabaseContract.Counters.TABLE + "." + DatabaseContract.Counters._ID + "=?";
                 selectionArgs = new String[]{uri.getLastPathSegment()};
-                count = db.update(CounterContract.Counters.TABLE, values, selection, selectionArgs);
+                count = db.update(DatabaseContract.Counters.TABLE, values, selection, selectionArgs);
+                break;
+            case EXCHANGE_RATE_LIST:
+                count = db.update(DatabaseContract.ExchangeRates.TABLE, values, selection, selectionArgs);
+                break;
+            case EXCHANGE_RATE_ID:
+                selection = DatabaseContract.ExchangeRates.TABLE + "." + DatabaseContract.Counters._ID + "=?";
+                selectionArgs = new String[]{uri.getLastPathSegment()};
+                count = db.update(DatabaseContract.ExchangeRates.TABLE, values, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Failed to update URI: " + uri);

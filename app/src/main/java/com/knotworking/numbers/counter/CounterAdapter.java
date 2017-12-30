@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.knotworking.numbers.R;
 import com.knotworking.numbers.databinding.CounterItemBinding;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,19 +20,17 @@ import java.util.List;
 public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHolder> {
 
     private List<CounterItem> data;
-    private Context context;
     protected CounterActionsImpl counterActions;
 
     public CounterAdapter(Context context) {
-        this.context = context;
         this.counterActions = new CounterActionsImpl(context);
     }
 
     public void setData(List<CounterItem> counterItems) {
         if (counterItems == null) {
-            this.data = null;
-            return;
+            counterItems = Collections.emptyList();
         }
+
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CounterDiffCallback(this.data, counterItems));
         this.data = counterItems;
         diffResult.dispatchUpdatesTo(this);
@@ -59,9 +58,7 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.ViewHold
         return data.get(position).getId();
     }
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public CounterItemBinding itemBinding;
 

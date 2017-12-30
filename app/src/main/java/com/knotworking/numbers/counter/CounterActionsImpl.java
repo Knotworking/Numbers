@@ -18,6 +18,8 @@ public class CounterActionsImpl implements CounterActions {
     private static final String EDIT_DIALOG = "edit_dialog";
 
     private Context context;
+
+    //TODO inject
     private DatabaseHelper databaseHelper;
 
     public CounterActionsImpl(Context context) {

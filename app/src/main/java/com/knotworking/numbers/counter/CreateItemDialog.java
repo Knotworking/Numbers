@@ -19,6 +19,8 @@ import com.knotworking.numbers.database.DatabaseHelperImpl;
  */
 
 public class CreateItemDialog extends DialogFragment {
+
+    //TODO inject
     private DatabaseHelper databaseHelper;
 
     @NonNull

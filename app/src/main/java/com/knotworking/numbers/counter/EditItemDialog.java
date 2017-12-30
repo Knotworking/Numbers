@@ -22,6 +22,7 @@ public class EditItemDialog extends DialogFragment{
     private static final String ARG_ID = "id";
     private static final String ARG_NAME = "name";
 
+    //TODO inject
     private DatabaseHelper databaseHelper;
 
     public static EditItemDialog newInstance(int id, String name) {

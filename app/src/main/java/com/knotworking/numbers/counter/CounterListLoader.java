@@ -72,7 +72,7 @@ public class CounterListLoader extends AsyncTaskLoader<List<CounterItem>> {
                 int length = cursor.getCount();
                 cursor.registerContentObserver(observer);
                 if (length > 0) {
-                    data = CounterCursorConverter.getData(cursor);
+                    data = CounterCursorConverter.INSTANCE.getData(cursor);
                 } else {
                     data = null;
                 }
