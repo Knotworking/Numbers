@@ -39,7 +39,7 @@ class CounterFragment : Fragment(), LoaderManager.LoaderCallbacks<List<CounterIt
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<List<CounterItem>> {
         val uri = DatabaseContract.Counters.CONTENT_URI
-        val projection = arrayOf(DatabaseContract.Counters._ID,
+        val projection = arrayOf(DatabaseContract.Counters.COL_ID,
                 DatabaseContract.Counters.COL_NAME,
                 DatabaseContract.Counters.COL_COUNT)
         return CounterListLoader(activity, uri, projection, null, null, null)

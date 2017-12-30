@@ -17,7 +17,7 @@ object CounterCursorConverter {
 
         if (cursor.moveToFirst()) {
             do {
-                val id = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Counters._ID))
+                val id = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Counters.COL_ID))
                 val entryName = cursor.getString(cursor.getColumnIndex(DatabaseContract.Counters.COL_NAME))
                 val entryCount = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Counters.COL_COUNT))
                 counterItems.add(CounterItem(id, entryName, entryCount))

@@ -18,9 +18,9 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private var adapter: NumbersPagerAdapter? = null
-    private var pager: ViewPager? = null
-    private var fab: FloatingActionButton? = null
+    private lateinit var adapter: NumbersPagerAdapter
+    private lateinit var pager: ViewPager
+    private lateinit var fab: FloatingActionButton
 
     //TODO inject singleton
     private val currencyApi = CurrencyApi(this)
@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         adapter = NumbersPagerAdapter(supportFragmentManager)
         pager = findViewById<View>(R.id.activity_view_pager) as ViewPager
-        pager?.adapter = adapter
+        pager.adapter = adapter
         fab = findViewById<View>(R.id.activity_fab) as FloatingActionButton
-        fab?.setOnClickListener(this)
+        fab.setOnClickListener(this)
 
         setupActionBar()
         checkExchangeRates()
@@ -46,11 +46,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         val tabListener = object : ActionBar.TabListener {
             override fun onTabSelected(tab: ActionBar.Tab, ft: FragmentTransaction) {
-                pager?.currentItem = tab.position
+                pager.currentItem = tab.position
                 if (tab.position == COUNTER_TAB) {
-                    fab?.show()
+                    fab.show()
                 } else {
-                    fab?.hide()
+                    fab.hide()
                 }
             }
 
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     .setTabListener(tabListener))
         }
 
-        pager!!.setOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+        pager.setOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 actionBar?.setSelectedNavigationItem(position)
             }
@@ -77,12 +77,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getTabTitle(position: Int): Int {
-        when (position) {
-            CONVERTER_TAB -> return R.string.first_tab
-            COUNTER_TAB -> return R.string.second_tab
+        return when (position) {
+            CONVERTER_TAB -> R.string.first_tab
+            COUNTER_TAB -> R.string.second_tab
             else -> {
                 Log.e(TAG, "tab position not recognised")
-                return 0
+                0
             }
         }
     }
