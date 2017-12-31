@@ -14,15 +14,22 @@ import com.knotworking.numbers.Constants.COUNTER_TAB
 import com.knotworking.numbers.Constants.EXCHANGE_RATE_FETCH_TIME
 import com.knotworking.numbers.api.CurrencyApi
 import com.knotworking.numbers.counter.CreateItemDialog
+import com.knotworking.numbers.database.DatabaseHelperImpl
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+    companion object {
+        private val TAG = MainActivity::class.java.simpleName
+        private val NEW_ITEM_DIALOG = "new_item_dialog"
+    }
 
     private lateinit var adapter: NumbersPagerAdapter
     private lateinit var pager: ViewPager
     private lateinit var fab: FloatingActionButton
 
-    //TODO inject singleton
+    //TODO inject singletons
+    private val databaseHelper = DatabaseHelperImpl(this)
     private val currencyApi = CurrencyApi(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,23 +113,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkExchangeRates() {
+        if (!databaseHelper.areExchangeRatesInDb() || isRefetchThresholdPassed()) {
+            currencyApi.getExchangeRates()
+        }
+    }
 
-        //TODO areExchangeRatesInDb
-
-        //TODO refactor into new method
+    private fun isRefetchThresholdPassed(): Boolean {
         val fetchThreshold = TimeUnit.DAYS.toMillis(7)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val lastFetchTimeStamp = sharedPreferences.getLong(EXCHANGE_RATE_FETCH_TIME, 0)
         val now = System.currentTimeMillis()
         val diff = now - lastFetchTimeStamp
 
-        if (diff > fetchThreshold) {
-            currencyApi.getExchangeRates()
-        }
-    }
-
-    companion object {
-        private val TAG = MainActivity::class.java.simpleName
-        private val NEW_ITEM_DIALOG = "new_item_dialog"
+        return diff > fetchThreshold
     }
 }

@@ -55,7 +55,6 @@ class DatabaseHelperImpl(private val context: Context) : DatabaseHelper {
     }
 
     override fun saveExchangeRates(rates: Map<String, Float>) {
-
         rates.forEach({
             replaceExchangeRate(currency = it.key, rate = it.value)
         })
@@ -70,5 +69,19 @@ class DatabaseHelperImpl(private val context: Context) : DatabaseHelper {
         contentValues.put(DatabaseContract.ExchangeRates.COL_RATE, rate)
 
         context.contentResolver.insert(DatabaseContract.ExchangeRates.CONTENT_URI, contentValues)
+    }
+
+    override fun areExchangeRatesInDb(): Boolean {
+        val uri = DatabaseContract.ExchangeRates.CONTENT_URI
+        val projection = arrayOf(DatabaseContract.ExchangeRates.COL_ID)
+        val cursor = context.contentResolver.query(uri, projection, null, null, null)
+
+        if (cursor != null) {
+            return cursor.count > 0
+        }
+
+        cursor?.close()
+
+        return false
     }
 }
