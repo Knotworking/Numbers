@@ -29,6 +29,8 @@ import com.knotworking.numbers.converter.UnitCode.TYPE_MASS
 import com.knotworking.numbers.converter.UnitCode.TYPE_TEMPERATURE
 import com.knotworking.numbers.converter.UnitCode.USD
 import com.knotworking.numbers.database.DatabaseContract
+import com.knotworking.numbers.database.DatabaseHelper
+import com.knotworking.numbers.database.DatabaseHelperImpl
 import kotlinx.android.synthetic.main.fragment_converter.*
 
 class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor> {
@@ -42,6 +44,9 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, Loader
 
     private var exchangeRates: Map<String, Float> = emptyMap()
 
+    //TODO inject singletons
+    private lateinit var databaseHelper: DatabaseHelper
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_converter, container, false)
     }
@@ -49,12 +54,16 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, Loader
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        databaseHelper = DatabaseHelperImpl(context)
+
         setupAdapters()
 
         setupSpinner(fragment_converter_type_spinner, typeAdapter)
         setupSpinner(fragment_converter_input_spinner, massAdapter)
         setupSpinner(fragment_converter_output_spinner, massAdapter)
         setupTextWatchers()
+
+        setupSaveButton()
 
         loaderManager.initLoader(EXCHANGE_RATE_LOADER, null, this)
     }
@@ -183,6 +192,24 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, Loader
         }
 
         outputEditText.setText(Utils.round(output).toString())
+    }
+
+    private fun setupSaveButton() {
+        fragment_converter_save_button.setOnClickListener {
+            saveCurrentConversion()
+        }
+    }
+
+    private fun saveCurrentConversion() {
+        val unitType = fragment_converter_type_spinner.selectedItemPosition
+        val inputType = fragment_converter_input_spinner.selectedItemPosition
+        val inputValue = Utils.getFloatFromString(fragment_converter_input_editText.text.toString())
+        val outputType = fragment_converter_output_spinner.selectedItemPosition
+        val outputValue = Utils.getFloatFromString(fragment_converter_output_editText.text.toString())
+
+        val historyItem = HistoryItem(unitType, inputType, inputValue, outputType, outputValue)
+
+        databaseHelper.addConversionHistoryItem(historyItem)
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {

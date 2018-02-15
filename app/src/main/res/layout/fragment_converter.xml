@@ -79,7 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_converter_output_layout"
         android:layout_marginTop="10dp"
-        android:text="Save"
+        android:text="@string/save_button"
         android:backgroundTint="@color/colorAccent"
         android:textColor="@android:color/white"
         android:layout_alignParentRight="true"/>

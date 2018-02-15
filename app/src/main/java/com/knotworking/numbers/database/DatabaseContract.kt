@@ -36,12 +36,12 @@ object DatabaseContract {
                     "counters")
 
             /**
-             * The mime type of a directory of collections.
+             * The mime type of a directory of counters.
              */
             val CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/counters"
 
             /**
-             * The mime type of a single collection.
+             * The mime type of a single counter item.
              */
             val CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/counter"
         }
@@ -77,6 +77,45 @@ object DatabaseContract {
              * The mime type of a single exchange rate.
              */
             val CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/exchange_rate"
+        }
+    }
+
+    class ConversionHistory : BaseColumns {
+        companion object {
+            val TABLE = "conversion_history"
+            val COL_ID = BaseColumns._ID
+            val COL_UNIT_TYPE_CODE = "type_code"
+            val COL_INPUT_UNIT_CODE = "input_unit_code"
+            val COL_INPUT_VALUE = "input_value"
+            val COL_OUTPUT_UNIT_CODE = "output_unit_code"
+            val COL_OUTPUT_VALUE = "output_value"
+
+            val CREATE_TABLE = "CREATE TABLE " + ConversionHistory.TABLE + " (" +
+                    COL_ID + " INTEGER PRIMARY KEY," +
+                    COL_UNIT_TYPE_CODE + " INTEGER," +
+                    COL_INPUT_UNIT_CODE + " INTEGER," +
+                    COL_INPUT_VALUE + " REAL," +
+                    COL_OUTPUT_UNIT_CODE + " INTEGER," +
+                    COL_OUTPUT_VALUE + " REAL)"
+
+            val DELETE_TABLE = "DROP TABLE IF EXISTS " + ConversionHistory.TABLE
+
+            /**
+             * The content URI for this table.
+             */
+            val CONTENT_URI: Uri = Uri.withAppendedPath(
+                    DatabaseContract.CONTENT_URI,
+                    "conversion_history")
+
+            /**
+             * The mime type of a directory of conversion history.
+             */
+            val CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/conversion_history"
+
+            /**
+             * The mime type of a single conversion history item.
+             */
+            val CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/conversion_history"
         }
     }
 

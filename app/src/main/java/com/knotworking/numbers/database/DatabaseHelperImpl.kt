@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.preference.PreferenceManager
 import com.knotworking.numbers.Constants.EXCHANGE_RATE_FETCH_TIME
+import com.knotworking.numbers.converter.HistoryItem
 
 class DatabaseHelperImpl(private val context: Context) : DatabaseHelper {
 
@@ -83,5 +84,21 @@ class DatabaseHelperImpl(private val context: Context) : DatabaseHelper {
         cursor?.close()
 
         return false
+    }
+
+    override fun addConversionHistoryItem(item: HistoryItem) {
+        val contentValues = ContentValues()
+        contentValues.put(DatabaseContract.ConversionHistory.COL_UNIT_TYPE_CODE, item.unitType)
+        contentValues.put(DatabaseContract.ConversionHistory.COL_INPUT_UNIT_CODE, item.inputUnitCode)
+        contentValues.put(DatabaseContract.ConversionHistory.COL_INPUT_VALUE, item.inputValue)
+        contentValues.put(DatabaseContract.ConversionHistory.COL_OUTPUT_UNIT_CODE, item.outputUnitCode)
+        contentValues.put(DatabaseContract.ConversionHistory.COL_OUTPUT_VALUE, item.outputValue)
+
+        context.contentResolver.insert(DatabaseContract.ConversionHistory.CONTENT_URI, contentValues)
+    }
+
+    override fun deleteConversionHistoryItem(id: Int) {
+        val uri = Uri.withAppendedPath(DatabaseContract.ConversionHistory.CONTENT_URI, Integer.toString(id))
+        context.contentResolver.delete(uri, null, null)
     }
 }
