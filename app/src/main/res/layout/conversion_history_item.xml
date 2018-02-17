@@ -20,7 +20,9 @@
         android:layout_marginLeft="@dimen/card_item_margin"
         android:layout_marginRight="@dimen/card_item_margin"
         android:layout_marginTop="@dimen/card_item_margin"
-        app:cardElevation="@dimen/card_elevation">
+        app:cardElevation="@dimen/card_elevation"
+        android:onClick="@{view -> actions.onItemClick(viewModel.item)}"
+        android:foreground="?attr/selectableItemBackground">
 
         <LinearLayout
             android:layout_width="match_parent"

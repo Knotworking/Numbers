@@ -5,8 +5,8 @@ package com.knotworking.numbers.converter.history
  */
 interface HistoryItemActions {
 
-    fun onItemClick()
+    fun onItemClick(item: HistoryItem)
 
-    fun onItemDeleteClick()
+    fun onItemDeleteClick(item: HistoryItem)
 
 }

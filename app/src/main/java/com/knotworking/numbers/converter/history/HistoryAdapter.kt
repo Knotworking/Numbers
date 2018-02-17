@@ -11,7 +11,7 @@ import com.knotworking.numbers.databinding.ConversionHistoryItemBinding
 /**
  * Created on 16.02.18.
  */
-class HistoryAdapter: RecyclerView.Adapter<HistoryAdapter.HistoryItemViewHolder>(), HistoryItemActions {
+class HistoryAdapter(val actions: HistoryItemActions): RecyclerView.Adapter<HistoryAdapter.HistoryItemViewHolder>() {
 
     private var data: List<HistoryItem> = dummyData()
 
@@ -44,15 +44,7 @@ class HistoryAdapter: RecyclerView.Adapter<HistoryAdapter.HistoryItemViewHolder>
 
     override fun onBindViewHolder(holder: HistoryItemViewHolder, position: Int) {
         holder.binding.viewModel = HistoryItemViewModel(data[position])
-        holder.binding.actions = this
-    }
-
-    override fun onItemClick() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onItemDeleteClick() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        holder.binding.actions = actions
     }
 
     class HistoryItemViewHolder(val binding: ConversionHistoryItemBinding) : RecyclerView.ViewHolder(binding.root)

@@ -7,4 +7,5 @@ data class HistoryItem(val unitType: Int,
                        val inputUnitCode: Int,
                        val inputValue: Float,
                        val outputUnitCode: Int,
-                       val outputValue: Float)
+                       val outputValue: Float,
+                       val id: Int = 0)

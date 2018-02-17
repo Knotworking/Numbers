@@ -31,8 +31,6 @@ import com.knotworking.numbers.converter.UnitCode.TYPE_TEMPERATURE
 import com.knotworking.numbers.converter.UnitCode.USD
 import com.knotworking.numbers.converter.history.HistoryItem
 import com.knotworking.numbers.database.DatabaseContract
-import com.knotworking.numbers.database.DatabaseHelper
-import com.knotworking.numbers.database.DatabaseHelperImpl
 import com.knotworking.numbers.databinding.FragmentConverterBinding
 import kotlinx.android.synthetic.main.fragment_converter.*
 
@@ -40,9 +38,6 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, Loader
     private val EXCHANGE_RATE_LOADER = 10
 
     private lateinit var binding: FragmentConverterBinding
-
-    //TODO inject singletons
-    private lateinit var databaseHelper: DatabaseHelper
 
     private var typeAdapter: ArrayAdapter<CharSequence>? = null
     private var massAdapter: ArrayAdapter<CharSequence>? = null
@@ -54,14 +49,12 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, Loader
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_converter, container, false)
-        binding.viewModel = ConverterViewModel()
+        binding.viewModel = ConverterViewModel(this)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        databaseHelper = DatabaseHelperImpl(context)
 
         setupAdapters()
 
@@ -216,7 +209,18 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, Loader
 
         val historyItem = HistoryItem(unitType, inputType, inputValue, outputType, outputValue)
 
-        databaseHelper.addConversionHistoryItem(historyItem)
+        //TODO move remaining logic to viewmodel
+        binding.viewModel.databaseHelper.addConversionHistoryItem(historyItem)
+    }
+
+    //Works, but not completely, default values overwriting
+    fun loadHistoryItem(item: HistoryItem) {
+        //edit text changed called before spinner item selected
+        handleTypeSelected(item.unitType)
+        fragment_converter_type_spinner.setSelection(item.unitType)
+        fragment_converter_input_spinner.setSelection(item.inputUnitCode)
+        fragment_converter_output_spinner.setSelection(item.outputUnitCode)
+        fragment_converter_input_editText.setText(item.inputValue.toString())
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
