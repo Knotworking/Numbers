@@ -1,4 +1,4 @@
-package com.knotworking.numbers.converter
+package com.knotworking.numbers.converter.history
 
 /**
  * Created on 31.12.17.

@@ -1,6 +1,6 @@
 package com.knotworking.numbers.database
 
-import com.knotworking.numbers.converter.HistoryItem
+import com.knotworking.numbers.converter.history.HistoryItem
 
 interface DatabaseHelper {
     fun addCounterEntry(name: String)

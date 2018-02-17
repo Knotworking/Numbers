@@ -1,6 +1,7 @@
 package com.knotworking.numbers.converter
 
 import android.database.Cursor
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.LoaderManager
@@ -28,13 +29,20 @@ import com.knotworking.numbers.converter.UnitCode.TYPE_DISTANCE
 import com.knotworking.numbers.converter.UnitCode.TYPE_MASS
 import com.knotworking.numbers.converter.UnitCode.TYPE_TEMPERATURE
 import com.knotworking.numbers.converter.UnitCode.USD
+import com.knotworking.numbers.converter.history.HistoryItem
 import com.knotworking.numbers.database.DatabaseContract
 import com.knotworking.numbers.database.DatabaseHelper
 import com.knotworking.numbers.database.DatabaseHelperImpl
+import com.knotworking.numbers.databinding.FragmentConverterBinding
 import kotlinx.android.synthetic.main.fragment_converter.*
 
 class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor> {
     private val EXCHANGE_RATE_LOADER = 10
+
+    private lateinit var binding: FragmentConverterBinding
+
+    //TODO inject singletons
+    private lateinit var databaseHelper: DatabaseHelper
 
     private var typeAdapter: ArrayAdapter<CharSequence>? = null
     private var massAdapter: ArrayAdapter<CharSequence>? = null
@@ -44,11 +52,10 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, Loader
 
     private var exchangeRates: Map<String, Float> = emptyMap()
 
-    //TODO inject singletons
-    private lateinit var databaseHelper: DatabaseHelper
-
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_converter, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_converter, container, false)
+        binding.viewModel = ConverterViewModel()
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

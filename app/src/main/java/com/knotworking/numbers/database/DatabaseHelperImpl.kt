@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.preference.PreferenceManager
 import com.knotworking.numbers.Constants.EXCHANGE_RATE_FETCH_TIME
-import com.knotworking.numbers.converter.HistoryItem
+import com.knotworking.numbers.converter.history.HistoryItem
 
 class DatabaseHelperImpl(private val context: Context) : DatabaseHelper {
 
