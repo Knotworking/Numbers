@@ -43,7 +43,7 @@ class HistoryAdapter: RecyclerView.Adapter<HistoryAdapter.HistoryItemViewHolder>
     override fun getItemCount(): Int = data.count()
 
     override fun onBindViewHolder(holder: HistoryItemViewHolder, position: Int) {
-        holder.binding.item = HistoryItemViewModel(data[position])
+        holder.binding.viewModel = HistoryItemViewModel(data[position])
         holder.binding.actions = this
     }
 

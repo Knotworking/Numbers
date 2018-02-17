@@ -1,8 +1,25 @@
 package com.knotworking.numbers.converter.history
 
+import android.content.Context
+import com.knotworking.numbers.Utils
+
 /**
  * Created on 31.12.17.
  */
-class HistoryItemViewModel(item: HistoryItem) {
-    //display methods here
+class HistoryItemViewModel(val item: HistoryItem) {
+
+    fun getInputDisplayText(context: Context): String {
+        return getDisplayText(context, item.inputValue, item.inputUnitCode)
+    }
+
+    fun getOutputDisplayText(context: Context): String {
+        return getDisplayText(context, item.outputValue, item.outputUnitCode)
+    }
+
+    private fun getDisplayText(context: Context, value: Float, unitCode: Int): String {
+        val displayValue = Utils.round(value).toString()
+        val unit = Utils.getUnitSymbol(context, item.unitType, unitCode)
+        return displayValue + unit
+    }
+
 }
