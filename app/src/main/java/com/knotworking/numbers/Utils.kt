@@ -1,6 +1,7 @@
 package com.knotworking.numbers
 
 import android.content.Context
+import android.widget.Spinner
 import com.knotworking.numbers.converter.UnitCode
 import com.knotworking.numbers.converter.UnitCode.CAD
 import com.knotworking.numbers.converter.UnitCode.DIST_F
@@ -18,6 +19,13 @@ import com.knotworking.numbers.converter.UnitCode.USD
 /**
  * Created by BRL on 25/03/17.
  */
+
+fun Spinner.setSafeSelection(position: Int) {
+    val listener = this.onItemSelectedListener
+    this.onItemSelectedListener = null
+    this.setSelection(position, false)
+    this.onItemSelectedListener = listener
+}
 
 object Utils {
     fun toGrams(inputUnitCode: Int, input: Float): Float {

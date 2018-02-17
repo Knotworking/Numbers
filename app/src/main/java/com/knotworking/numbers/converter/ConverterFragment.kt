@@ -29,12 +29,13 @@ import com.knotworking.numbers.converter.UnitCode.TYPE_DISTANCE
 import com.knotworking.numbers.converter.UnitCode.TYPE_MASS
 import com.knotworking.numbers.converter.UnitCode.TYPE_TEMPERATURE
 import com.knotworking.numbers.converter.UnitCode.USD
-import com.knotworking.numbers.converter.history.HistoryItem
 import com.knotworking.numbers.database.DatabaseContract
 import com.knotworking.numbers.databinding.FragmentConverterBinding
+import com.knotworking.numbers.setSafeSelection
 import kotlinx.android.synthetic.main.fragment_converter.*
 
 class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor> {
+
     private val EXCHANGE_RATE_LOADER = 10
 
     private lateinit var binding: FragmentConverterBinding
@@ -46,6 +47,9 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, Loader
     private var currencyAdapter: ArrayAdapter<CharSequence>? = null
 
     private var exchangeRates: Map<String, Float> = emptyMap()
+
+    //TODO, evaluate better method?
+    private var autoCalculationEnabled = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_converter, container, false)
@@ -136,32 +140,44 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, Loader
         when (position) {
             TYPE_MASS -> {
                 fragment_converter_input_spinner.adapter = massAdapter
-                fragment_converter_input_spinner.setSelection(MASS_G)
                 fragment_converter_output_spinner.adapter = massAdapter
-                fragment_converter_output_spinner.setSelection(MASS_OZ)
+                if (autoCalculationEnabled) {
+                    fragment_converter_input_spinner.setSelection(MASS_G)
+                    fragment_converter_output_spinner.setSelection(MASS_OZ)
+                }
             }
             TYPE_TEMPERATURE -> {
                 fragment_converter_input_spinner.adapter = temperatureAdapter
-                fragment_converter_input_spinner.setSelection(TEMP_C)
                 fragment_converter_output_spinner.adapter = temperatureAdapter
-                fragment_converter_output_spinner.setSelection(TEMP_F)
+                if (autoCalculationEnabled) {
+                    fragment_converter_input_spinner.setSelection(TEMP_C)
+                    fragment_converter_output_spinner.setSelection(TEMP_F)
+                }
             }
             TYPE_DISTANCE -> {
                 fragment_converter_input_spinner.adapter = distanceAdapter
-                fragment_converter_input_spinner.setSelection(DIST_MI)
                 fragment_converter_output_spinner.adapter = distanceAdapter
-                fragment_converter_output_spinner.setSelection(DIST_KM)
+                if (autoCalculationEnabled) {
+                    fragment_converter_input_spinner.setSelection(DIST_MI)
+                    fragment_converter_output_spinner.setSelection(DIST_KM)
+                }
             }
             TYPE_CURRENCY -> {
                 fragment_converter_input_spinner.adapter = currencyAdapter
-                fragment_converter_input_spinner.setSelection(USD)
                 fragment_converter_output_spinner.adapter = currencyAdapter
-                fragment_converter_output_spinner.setSelection(EUR)
+                if (autoCalculationEnabled) {
+                    fragment_converter_input_spinner.setSelection(USD)
+                    fragment_converter_output_spinner.setSelection(EUR)
+                }
             }
         }
     }
 
     private fun parametersChanged(updateOutput: Boolean) {
+        if (!autoCalculationEnabled) {
+            return
+        }
+
         val inputUnitCode = if (updateOutput) fragment_converter_input_spinner.selectedItemPosition else fragment_converter_output_spinner.selectedItemPosition
         val outputUnitCode = if (updateOutput) fragment_converter_output_spinner.selectedItemPosition else fragment_converter_input_spinner.selectedItemPosition
         val inputEditText = if (updateOutput) fragment_converter_input_editText else fragment_converter_output_editText
@@ -207,19 +223,24 @@ class ConverterFragment : Fragment(), AdapterView.OnItemSelectedListener, Loader
         val outputType = fragment_converter_output_spinner.selectedItemPosition
         val outputValue = Utils.getFloatFromString(fragment_converter_output_editText.text.toString())
 
-        val historyItem = HistoryItem(unitType, inputType, inputValue, outputType, outputValue)
+        val historyItem = ConversionItem(unitType, inputType, inputValue, outputType, outputValue)
 
         //TODO move remaining logic to viewmodel
         binding.viewModel.databaseHelper.addConversionHistoryItem(historyItem)
     }
 
     //Works, but not completely, default values overwriting
-    fun loadHistoryItem(item: HistoryItem) {
-        //edit text changed called before spinner item selected
+    fun loadHistoryItem(item: ConversionItem) {
+        autoCalculationEnabled = false
+
+        //perhaps not needed if not safe call
         handleTypeSelected(item.unitType)
-        fragment_converter_type_spinner.setSelection(item.unitType)
-        fragment_converter_input_spinner.setSelection(item.inputUnitCode)
-        fragment_converter_output_spinner.setSelection(item.outputUnitCode)
+
+        fragment_converter_type_spinner.setSafeSelection(item.unitType)
+        fragment_converter_input_spinner.setSafeSelection(item.inputUnitCode)
+        fragment_converter_output_spinner.setSafeSelection(item.outputUnitCode)
+
+        autoCalculationEnabled = true
         fragment_converter_input_editText.setText(item.inputValue.toString())
     }
 
