@@ -7,3 +7,16 @@
 /build
 /captures
 .externalNativeBuild
+gradlew.bat
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/kotlinc.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/runConfigurations.xml
+.idea/vcs.xml
+.idea/copyright/profiles_settings.xml
+.idea/shelf/stuff.xml
+.idea/shelf/stuff/shelved.patch
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
