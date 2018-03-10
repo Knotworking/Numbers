@@ -1,6 +1,8 @@
 package com.knotworking.numbers
 
 import android.content.Context
+import android.text.TextWatcher
+import android.widget.EditText
 import android.widget.Spinner
 import com.knotworking.numbers.converter.UnitCode
 import com.knotworking.numbers.converter.UnitCode.CAD
@@ -20,11 +22,19 @@ import com.knotworking.numbers.converter.UnitCode.USD
  * Created by BRL on 25/03/17.
  */
 
-fun Spinner.setSafeSelection(position: Int) {
+// set the value without triggering the listener
+fun Spinner.setSelectionSilently(position: Int) {
     val listener = this.onItemSelectedListener
     this.onItemSelectedListener = null
     this.setSelection(position, false)
     this.onItemSelectedListener = listener
+}
+
+// set the value without triggering the listener
+fun EditText.setTextSilently(text: String, watcher: TextWatcher) {
+    this.removeTextChangedListener(watcher)
+    this.setText(text)
+    this.addTextChangedListener(watcher)
 }
 
 object Utils {
