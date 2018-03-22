@@ -60,9 +60,9 @@
                     android:layout_margin="8dp"
                     android:inputType="numberSigned|numberDecimal"
                     android:tag="input editText"
-                    app:listener="@{viewModel}"
+                    app:viewModel="@{viewModel}"
                     app:value="@{viewModel.inputValue}"
-                    app:watcher="@{viewModel}" />
+                    app:watcher="@{viewModel.inputEditTextWatcher}" />
 
                 <Spinner
                     android:id="@+id/fragment_converter_input_spinner"
@@ -92,9 +92,9 @@
                     android:layout_margin="8dp"
                     android:inputType="numberSigned|numberDecimal"
                     android:tag="output editText"
-                    app:listener="@{viewModel}"
+                    app:viewModel="@{viewModel}"
                     app:value="@{viewModel.outputValue}"
-                    app:watcher="@{viewModel}" />
+                    app:watcher="@{viewModel.outputEditTextWatcher}" />
 
                 <Spinner
                     android:id="@+id/fragment_converter_output_spinner"

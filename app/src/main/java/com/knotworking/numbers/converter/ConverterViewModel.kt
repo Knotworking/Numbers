@@ -12,6 +12,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.knotworking.numbers.BR
 import com.knotworking.numbers.R
+import com.knotworking.numbers.Utils
 import com.knotworking.numbers.converter.history.HistoryAdapter
 import com.knotworking.numbers.converter.history.HistoryItemActions
 import com.knotworking.numbers.database.DatabaseHelper
@@ -24,7 +25,7 @@ import com.knotworking.numbers.database.DatabaseHelperImpl
 //TODO issue, go from currency history item to temp history item
 
 class ConverterViewModel(private val fragment: ConverterFragment) :
-        BaseObservable(), HistoryItemActions, AdapterView.OnItemSelectedListener, TextWatcher {
+        BaseObservable(), HistoryItemActions, AdapterView.OnItemSelectedListener {
 
     lateinit var typeAdapter: ArrayAdapter<CharSequence>
     private lateinit var massAdapter: ArrayAdapter<CharSequence>
@@ -59,9 +60,13 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
 
     var exchangeRates: Map<String, Float> = emptyMap()
 
+    lateinit var inputEditTextWatcher: TextWatcher
+    lateinit var outputEditTextWatcher: TextWatcher
+
     init {
         setupAdapters()
         inputOutputAdapter = massAdapter
+        setupEditTextWatchers()
     }
 
     private fun setupAdapters() {
@@ -77,14 +82,87 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
         currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
     }
 
+    private fun setupEditTextWatchers() {
+        inputEditTextWatcher = object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val inputValue = Utils.getFloatFromString(s.toString())
+                calculateConversion(inputValue)
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+        }
+
+        outputEditTextWatcher = object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val outputValue = Utils.getFloatFromString(s.toString())
+                calculateConversion(outputValue, true)
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+        }
+    }
+
+    private fun calculateConversion(changedValue: Float, outputChanged: Boolean = false) {
+        Log.i("TAG", "Calculate conversion. OutputChanged: $outputChanged")
+
+        var input = changedValue
+
+        val inputCode = if (outputChanged) {
+            outputUnitCode.get()
+        } else {
+            inputUnitCode.get()
+        }
+
+        val outputCode = if (outputChanged) {
+            inputUnitCode.get()
+        } else {
+            outputUnitCode.get()
+        }
+
+        var output = 0f
+
+        when (unitType.get()) {
+            UnitCode.TYPE_MASS -> {
+                input = Utils.toGrams(inputCode, input)
+                output = Utils.fromGrams(outputCode, input)
+            }
+            UnitCode.TYPE_TEMPERATURE -> {
+                output = if (inputCode == outputCode) {
+                    input
+                } else {
+                    if (inputCode == UnitCode.TEMP_C) Utils.toFahrenheit(input)
+                    else Utils.toCelsius(input)
+                }
+            }
+            UnitCode.TYPE_DISTANCE -> {
+                input = Utils.toMetres(inputCode, input)
+                output = Utils.fromMetres(outputCode, input)
+            }
+            UnitCode.TYPE_CURRENCY -> {
+                input = Utils.toUsd(inputCode, input, exchangeRates)
+                output = Utils.fromUsd(outputCode, input, exchangeRates)
+            }
+        }
+
+        if (outputChanged) {
+            inputValue.set(output)
+        } else {
+            outputValue.set(output)
+        }
+    }
+
     fun setConversionItem(item: ConversionItem) {
         handleTypeSelected(item.unitType)
-
-//        unitType = item.unitType
-//        inputUnitCode = item.inputUnitCode
-//        inputValue = item.inputValue
-//        outputUnitCode = item.outputUnitCode
-//        outputValue = item.outputValue
 
         unitType.set(item.unitType)
         inputUnitCode.set(item.inputUnitCode)
@@ -103,14 +181,6 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
         databaseHelper.deleteConversionHistoryItem(item.id)
     }
 
-    override fun afterTextChanged(s: Editable?) {
-
-    }
-
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -127,6 +197,8 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
                 Log.i("ConverterViewModel", "Output code selected: " + (inputOutputAdapter?.getItem(position)))
             }
         }
+
+        calculateConversion(inputValue.get())
     }
 
     private fun handleTypeSelected(position: Int) {
