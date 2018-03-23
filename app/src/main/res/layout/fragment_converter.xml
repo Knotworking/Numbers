@@ -60,7 +60,7 @@
                     android:layout_margin="8dp"
                     android:inputType="numberSigned|numberDecimal"
                     android:tag="input editText"
-                    app:viewModel="@{viewModel}"
+                    app:listener="@{viewModel.inputEditTextWatcher}"
                     app:value="@{viewModel.inputValue}"
                     app:watcher="@{viewModel.inputEditTextWatcher}" />
 
@@ -92,7 +92,7 @@
                     android:layout_margin="8dp"
                     android:inputType="numberSigned|numberDecimal"
                     android:tag="output editText"
-                    app:viewModel="@{viewModel}"
+                    app:listener="@{viewModel.outputEditTextWatcher}"
                     app:value="@{viewModel.outputValue}"
                     app:watcher="@{viewModel.outputEditTextWatcher}" />
 

@@ -85,8 +85,9 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
     private fun setupEditTextWatchers() {
         inputEditTextWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val inputValue = Utils.getFloatFromString(s.toString())
-                calculateConversion(inputValue)
+                val value = Utils.getFloatFromString(s.toString())
+                inputValue.set(value)
+                calculateConversion(value)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -99,8 +100,9 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
 
         outputEditTextWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val outputValue = Utils.getFloatFromString(s.toString())
-                calculateConversion(outputValue, true)
+                val value = Utils.getFloatFromString(s.toString())
+                outputValue.set(value)
+                calculateConversion(value, true)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -114,6 +116,7 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
 
     private fun calculateConversion(changedValue: Float, outputChanged: Boolean = false) {
         Log.i("TAG", "Calculate conversion. OutputChanged: $outputChanged")
+        Log.i("TAG", "Calculate conversion. input value: $changedValue")
 
         var input = changedValue
 
@@ -169,8 +172,6 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
         inputValue.set(item.inputValue)
         outputUnitCode.set(item.outputUnitCode)
         outputValue.set(item.outputValue)
-
-        //notifyChange()
     }
 
     override fun onItemClick(item: ConversionItem) {
@@ -184,6 +185,10 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        //TODO input value not updated
+        // try to lose focus on edit text
+
+
         when (parent?.id) {
             R.id.fragment_converter_type_spinner -> {
                 handleTypeSelected(position)
