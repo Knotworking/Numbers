@@ -1,5 +1,7 @@
 package com.knotworking.numbers.database
 
+import com.knotworking.numbers.converter.ConversionItem
+
 interface DatabaseHelper {
     fun addCounterEntry(name: String)
 
@@ -12,4 +14,8 @@ interface DatabaseHelper {
     fun saveExchangeRates(rates: Map<String, Float>)
 
     fun areExchangeRatesInDb(): Boolean
+
+    fun addConversionHistoryItem(item: ConversionItem)
+
+    fun deleteConversionHistoryItem(id: Int)
 }

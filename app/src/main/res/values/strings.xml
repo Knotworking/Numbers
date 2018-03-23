@@ -11,6 +11,7 @@
     <string name="new_item_dialog_positive_button">Create</string>
     <string name="edit_item_dialog_title">Edit Item</string>
     <string name="edit_item_dialog_positive_button">Save</string>
+    <string name="save_button">Save</string>
 
     <string-array name="type_array">
         <item>Mass</item>

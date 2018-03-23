@@ -10,6 +10,7 @@ class DatabaseOpenHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(DatabaseContract.Counters.CREATE_TABLE)
         db.execSQL(DatabaseContract.ExchangeRates.CREATE_TABLE)
+        db.execSQL(DatabaseContract.ConversionHistory.CREATE_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
