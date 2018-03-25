@@ -33,29 +33,8 @@ class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        setupSaveButton()
-
         loaderManager.initLoader(CONVERSION_HISTORY_LOADER, null, this)
         loaderManager.initLoader(EXCHANGE_RATE_LOADER, null, this)
-    }
-
-    private fun setupSaveButton() {
-        fragment_converter_save_button.setOnClickListener {
-            saveCurrentConversion()
-        }
-    }
-
-    private fun saveCurrentConversion() {
-        val unitType = fragment_converter_type_spinner.selectedItemPosition
-        val inputType = fragment_converter_input_spinner.selectedItemPosition
-        val inputValue = Utils.getFloatFromString(fragment_converter_input_editText.text.toString())
-        val outputType = fragment_converter_output_spinner.selectedItemPosition
-        val outputValue = Utils.getFloatFromString(fragment_converter_output_editText.text.toString())
-
-        val historyItem = ConversionItem(unitType, inputType, inputValue, outputType, outputValue)
-
-        //TODO move remaining logic to viewmodel
-        binding.viewModel.databaseHelper.addConversionHistoryItem(historyItem)
     }
 
     fun loadHistoryItem(item: ConversionItem) {

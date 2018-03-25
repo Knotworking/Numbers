@@ -164,6 +164,16 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
         }
     }
 
+    fun saveCurrentItem() {
+        val conversionItem = ConversionItem(unitType.get(),
+                inputUnitCode.get(),
+                inputValue.get(),
+                outputUnitCode.get(),
+                outputValue.get())
+
+        databaseHelper.addConversionHistoryItem(conversionItem)
+    }
+
     fun setConversionItem(item: ConversionItem) {
         handleTypeSelected(item.unitType)
 
