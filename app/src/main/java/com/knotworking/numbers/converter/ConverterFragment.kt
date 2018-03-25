@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.knotworking.numbers.R
 import com.knotworking.numbers.Utils
+import com.knotworking.numbers.converter.history.HistoryCursorConverter
 import com.knotworking.numbers.database.DatabaseContract
 import com.knotworking.numbers.databinding.FragmentConverterBinding
 import kotlinx.android.synthetic.main.fragment_converter.*
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_converter.*
 class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
     private val EXCHANGE_RATE_LOADER = 10
+    private val CONVERSION_HISTORY_LOADER = 20
 
     private lateinit var binding: FragmentConverterBinding
 
@@ -33,6 +35,7 @@ class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
         setupSaveButton()
 
+        loaderManager.initLoader(CONVERSION_HISTORY_LOADER, null, this)
         loaderManager.initLoader(EXCHANGE_RATE_LOADER, null, this)
     }
 
@@ -43,7 +46,6 @@ class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     private fun saveCurrentConversion() {
-        //TODO check that edit text is defocusing (add saving value to viewmodel) before this gets called
         val unitType = fragment_converter_type_spinner.selectedItemPosition
         val inputType = fragment_converter_input_spinner.selectedItemPosition
         val inputValue = Utils.getFloatFromString(fragment_converter_input_editText.text.toString())
@@ -61,20 +63,48 @@ class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-        val uri = DatabaseContract.ExchangeRates.CONTENT_URI
-        val projection = arrayOf(DatabaseContract.ExchangeRates.COL_CURRENCY,
-                DatabaseContract.ExchangeRates.COL_RATE)
-        return CursorLoader(context, uri, projection, null, null, null)
+        when (id) {
+            EXCHANGE_RATE_LOADER -> {
+                val uri = DatabaseContract.ExchangeRates.CONTENT_URI
+                val projection = arrayOf(DatabaseContract.ExchangeRates.COL_CURRENCY,
+                        DatabaseContract.ExchangeRates.COL_RATE)
+                return CursorLoader(context, uri, projection, null, null, null)
+            }
+            else -> {
+                val uri = DatabaseContract.ConversionHistory.CONTENT_URI
+                val projection = arrayOf(DatabaseContract.ConversionHistory.COL_UNIT_TYPE_CODE,
+                        DatabaseContract.ConversionHistory.COL_INPUT_UNIT_CODE,
+                        DatabaseContract.ConversionHistory.COL_INPUT_VALUE,
+                        DatabaseContract.ConversionHistory.COL_OUTPUT_UNIT_CODE,
+                        DatabaseContract.ConversionHistory.COL_OUTPUT_VALUE)
+                val sortOrder = DatabaseContract.ConversionHistory.COL_ID + " DESC"
+                return CursorLoader(context, uri, projection, null, null, sortOrder)
+            }
+        }
+
 
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
-        data?.let {
-            binding.viewModel.exchangeRates = ExchangeRateCursorConverter.getData(it)
+        when (loader?.id) {
+            EXCHANGE_RATE_LOADER -> {
+                data?.let {
+                    binding.viewModel.exchangeRates = ExchangeRateCursorConverter.getData(it)
+                }
+            }
+            CONVERSION_HISTORY_LOADER -> {
+                data?.let {
+                    binding.viewModel.historyAdapter.setData(HistoryCursorConverter.getData(it))
+                }
+            }
         }
     }
 
     override fun onLoaderReset(loader: Loader<Cursor>?) {
-        binding.viewModel.exchangeRates = emptyMap()
+        when (loader?.id) {
+            EXCHANGE_RATE_LOADER -> binding.viewModel.exchangeRates = emptyMap()
+            CONVERSION_HISTORY_LOADER -> binding.viewModel.historyAdapter.setData(emptyList())
+        }
+
     }
 }

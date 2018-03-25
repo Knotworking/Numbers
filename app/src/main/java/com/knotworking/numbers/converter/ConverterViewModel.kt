@@ -185,9 +185,6 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        //TODO input value not updated
-        // try to lose focus on edit text
-
 
         when (parent?.id) {
             R.id.fragment_converter_type_spinner -> {
