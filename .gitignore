@@ -20,3 +20,5 @@ gradlew.bat
 .idea/shelf/stuff/shelved.patch
 gradle/wrapper/gradle-wrapper.jar
 gradle/wrapper/gradle-wrapper.properties
+gradlew
+.idea/codeStyles/Project.xml
