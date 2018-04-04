@@ -38,7 +38,7 @@ class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     fun loadHistoryItem(item: ConversionItem) {
-        binding.viewModel.setConversionItem(item)
+        binding.viewModel?.setConversionItem(item)
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
@@ -68,12 +68,12 @@ class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         when (loader?.id) {
             EXCHANGE_RATE_LOADER -> {
                 data?.let {
-                    binding.viewModel.exchangeRates = ExchangeRateCursorConverter.getData(it)
+                    binding.viewModel!!.exchangeRates = ExchangeRateCursorConverter.getData(it)
                 }
             }
             CONVERSION_HISTORY_LOADER -> {
                 data?.let {
-                    binding.viewModel.historyAdapter.setData(HistoryCursorConverter.getData(it))
+                    binding.viewModel!!.historyAdapter.setData(HistoryCursorConverter.getData(it))
                 }
             }
         }
@@ -81,8 +81,8 @@ class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
     override fun onLoaderReset(loader: Loader<Cursor>?) {
         when (loader?.id) {
-            EXCHANGE_RATE_LOADER -> binding.viewModel.exchangeRates = emptyMap()
-            CONVERSION_HISTORY_LOADER -> binding.viewModel.historyAdapter.setData(emptyList())
+            EXCHANGE_RATE_LOADER -> binding.viewModel!!.exchangeRates = emptyMap()
+            CONVERSION_HISTORY_LOADER -> binding.viewModel!!.historyAdapter.setData(emptyList())
         }
 
     }

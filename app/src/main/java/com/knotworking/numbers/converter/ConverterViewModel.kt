@@ -120,16 +120,16 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
 
         var input = changedValue
 
-        val inputCode = if (outputChanged) {
-            outputUnitCode.get()
+        val inputCode: Int = if (outputChanged) {
+            outputUnitCode.get()!!
         } else {
-            inputUnitCode.get()
+            inputUnitCode.get()!!
         }
 
-        val outputCode = if (outputChanged) {
-            inputUnitCode.get()
+        val outputCode: Int = if (outputChanged) {
+            inputUnitCode.get()!!
         } else {
-            outputUnitCode.get()
+            outputUnitCode.get()!!
         }
 
         var output = 0f
@@ -165,11 +165,11 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
     }
 
     fun saveCurrentItem() {
-        val conversionItem = ConversionItem(unitType.get(),
-                inputUnitCode.get(),
-                inputValue.get(),
-                outputUnitCode.get(),
-                outputValue.get())
+        val conversionItem = ConversionItem(unitType.get()!!,
+                inputUnitCode.get()!!,
+                inputValue.get()!!,
+                outputUnitCode.get()!!,
+                outputValue.get()!!)
 
         databaseHelper.addConversionHistoryItem(conversionItem)
     }
@@ -210,7 +210,7 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
             }
         }
 
-        calculateConversion(inputValue.get())
+        calculateConversion(inputValue.get()!!)
     }
 
     private fun handleTypeSelected(position: Int) {
