@@ -2,6 +2,8 @@ package com.knotworking.numbers
 
 import android.content.Context
 import android.text.TextWatcher
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Spinner
 import com.knotworking.numbers.converter.UnitCode
@@ -132,5 +134,10 @@ object Utils {
         val spacing = if (typeCode == UnitCode.TYPE_CURRENCY) " " else ""
 
         return spacing + context.resources.getStringArray(typeArray)[unitCode]
+    }
+
+    fun hideKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

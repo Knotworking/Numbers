@@ -17,10 +17,6 @@ class HistoryAdapter(val actions: HistoryItemActions): RecyclerView.Adapter<Hist
     private var data: List<ConversionItem> = emptyList()
 
     fun setData(conversionItems: List<ConversionItem>) {
-        //TODO diffutil
-//        data = conversionItems
-//        notifyDataSetChanged()
-
         val diffResult = DiffUtil.calculateDiff(HistoryDiffCallBack(this.data, conversionItems))
         this.data = conversionItems
         diffResult.dispatchUpdatesTo(this)

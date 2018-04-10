@@ -172,6 +172,7 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
                 outputValue.get()!!)
 
         databaseHelper.addConversionHistoryItem(conversionItem)
+        Utils.hideKeyboard(fragment.view!!)
     }
 
     fun setConversionItem(item: ConversionItem) {
@@ -186,6 +187,7 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
 
     override fun onItemClick(item: ConversionItem) {
         fragment.loadHistoryItem(item)
+        Utils.hideKeyboard(fragment.view!!)
     }
 
     override fun onItemDeleteClick(item: ConversionItem): Boolean {
