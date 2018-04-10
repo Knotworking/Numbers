@@ -9,6 +9,6 @@ interface HistoryItemActions {
 
     fun onItemClick(item: ConversionItem)
 
-    fun onItemDeleteClick(item: ConversionItem)
+    fun onItemDeleteClick(item: ConversionItem): Boolean
 
 }

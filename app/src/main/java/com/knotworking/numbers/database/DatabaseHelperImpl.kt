@@ -97,8 +97,8 @@ class DatabaseHelperImpl(private val context: Context) : DatabaseHelper {
         context.contentResolver.insert(DatabaseContract.ConversionHistory.CONTENT_URI, contentValues)
     }
 
-    override fun deleteConversionHistoryItem(id: Int) {
+    override fun deleteConversionHistoryItem(id: Int): Boolean {
         val uri = Uri.withAppendedPath(DatabaseContract.ConversionHistory.CONTENT_URI, Integer.toString(id))
-        context.contentResolver.delete(uri, null, null)
+        return context.contentResolver.delete(uri, null, null) > 0
     }
 }

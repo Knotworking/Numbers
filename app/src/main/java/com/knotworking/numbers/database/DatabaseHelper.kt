@@ -17,5 +17,5 @@ interface DatabaseHelper {
 
     fun addConversionHistoryItem(item: ConversionItem)
 
-    fun deleteConversionHistoryItem(id: Int)
+    fun deleteConversionHistoryItem(id: Int): Boolean
 }

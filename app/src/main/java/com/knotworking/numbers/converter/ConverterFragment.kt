@@ -51,7 +51,8 @@ class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
             }
             else -> {
                 val uri = DatabaseContract.ConversionHistory.CONTENT_URI
-                val projection = arrayOf(DatabaseContract.ConversionHistory.COL_UNIT_TYPE_CODE,
+                val projection = arrayOf(DatabaseContract.ConversionHistory.COL_ID,
+                        DatabaseContract.ConversionHistory.COL_UNIT_TYPE_CODE,
                         DatabaseContract.ConversionHistory.COL_INPUT_UNIT_CODE,
                         DatabaseContract.ConversionHistory.COL_INPUT_VALUE,
                         DatabaseContract.ConversionHistory.COL_OUTPUT_UNIT_CODE,

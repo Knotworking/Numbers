@@ -104,7 +104,7 @@ class DatabaseProvider : ContentProvider() {
             CONVERSION_HISTORY_ID -> {
                 selection = DatabaseContract.ConversionHistory.COL_ID + "=?"
                 selectionArgs = arrayOf(uri.lastPathSegment)
-                deleted = db.delete(DatabaseContract.ExchangeRates.TABLE, selection, selectionArgs)
+                deleted = db.delete(DatabaseContract.ConversionHistory.TABLE, selection, selectionArgs)
             }
             else -> throw IllegalArgumentException("Failed to delete from URI: " + uri)
         }

@@ -188,8 +188,8 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
         fragment.loadHistoryItem(item)
     }
 
-    override fun onItemDeleteClick(item: ConversionItem) {
-        databaseHelper.deleteConversionHistoryItem(item.id)
+    override fun onItemDeleteClick(item: ConversionItem): Boolean {
+        return databaseHelper.deleteConversionHistoryItem(item.id)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
