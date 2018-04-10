@@ -1,6 +1,7 @@
 package com.knotworking.numbers.converter.history
 
 import android.databinding.DataBindingUtil
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -17,8 +18,12 @@ class HistoryAdapter(val actions: HistoryItemActions): RecyclerView.Adapter<Hist
 
     fun setData(conversionItems: List<ConversionItem>) {
         //TODO diffutil
-        data = conversionItems
-        notifyDataSetChanged()
+//        data = conversionItems
+//        notifyDataSetChanged()
+
+        val diffResult = DiffUtil.calculateDiff(HistoryDiffCallBack(this.data, conversionItems))
+        this.data = conversionItems
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryItemViewHolder {
