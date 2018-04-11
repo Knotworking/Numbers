@@ -9,6 +9,8 @@ interface DatabaseHelper {
 
     fun modifyCount(id: Int, change: Int)
 
+    fun setCount(id: Int, value: Int)
+
     fun modifyName(id: Int, newName: String)
 
     fun saveExchangeRates(rates: Map<String, Float>)

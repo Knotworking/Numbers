@@ -3,20 +3,9 @@ package com.knotworking.numbers.counter
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 
-import com.knotworking.numbers.BR
-
-class CounterItem(var id: Int, @get:Bindable
-var name: String?, private var count: Int) : BaseObservable() {
-
-    @Bindable
-    fun getCount(): Int {
-        return count
-    }
-
-    fun setCount(count: Int) {
-        this.count = count
-        notifyPropertyChanged(BR.count)
-    }
+class CounterItem(var id: Int,
+                  @get:Bindable var name: String?,
+                  @get:Bindable var count: Int) : BaseObservable() {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -24,7 +13,7 @@ var name: String?, private var count: Int) : BaseObservable() {
 
         val item = other as CounterItem?
         if (this.name != item!!.name) return false
-        return if (this.getCount() != item.getCount()) false else id == item.id
+        return if (this.count != item.count) false else id == item.id
 
     }
 

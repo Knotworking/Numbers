@@ -7,7 +7,14 @@
     android:paddingRight="20dp">
 
     <EditText
-        android:id="@+id/dialog_create_counter_item_editText"
+        android:id="@+id/dialog_item_counter_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/dialog_item_label_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

@@ -3,10 +3,11 @@
     <string name="first_tab">Stuff</string>
     <string name="second_tab">Things</string>
     <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_delete">Delete</string>
     <string name="delete_item_dialog_title">Delete Item</string>
     <string name="delete_item_dialog_message">Are you sure?</string>
     <string name="delete_item_dialog_positive_button">Delete</string>
-    <string name="new_item_dialog_hint">Enter name</string>
+    <string name="new_item_dialog_hint">Item name</string>
     <string name="new_item_dialog_title">New Item</string>
     <string name="new_item_dialog_positive_button">Create</string>
     <string name="edit_item_dialog_title">Edit Item</string>

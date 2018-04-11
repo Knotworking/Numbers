@@ -5,9 +5,7 @@ package com.knotworking.numbers.counter
  */
 
 interface CounterActions {
-    fun itemLongClick(id: Int): Boolean
-
-    fun nameLongClick(id: Int, name: String): Boolean
+    fun itemLongClick(item: CounterItem): Boolean
 
     fun incrementCount(id: Int)
 

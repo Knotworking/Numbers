@@ -32,6 +32,15 @@ class DatabaseHelperImpl(private val context: Context) : DatabaseHelper {
         context.contentResolver.update(uri, values, null, null)
     }
 
+    override fun setCount(id: Int, value: Int) {
+        val uri = Uri.withAppendedPath(DatabaseContract.Counters.CONTENT_URI, Integer.toString(id))
+
+        val values = ContentValues()
+        values.put(DatabaseContract.Counters.COL_COUNT, value)
+
+        context.contentResolver.update(uri, values, null, null)
+    }
+
     override fun modifyName(id: Int, newName: String) {
         val uri = Uri.withAppendedPath(DatabaseContract.Counters.CONTENT_URI, Integer.toString(id))
 
