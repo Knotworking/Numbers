@@ -131,7 +131,7 @@ object Utils {
             else -> 0
         }
 
-        val spacing = if (typeCode == UnitCode.TYPE_CURRENCY) " " else ""
+        val spacing = if (typeCode != UnitCode.TYPE_TEMPERATURE) " " else ""
 
         return spacing + context.resources.getStringArray(typeArray)[unitCode]
     }
