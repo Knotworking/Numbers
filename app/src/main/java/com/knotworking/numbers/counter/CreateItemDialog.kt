@@ -31,9 +31,9 @@ class CreateItemDialog : DialogFragment() {
         val editText = layout.findViewById<View>(R.id.dialog_item_label_editText) as EditText
         editText.setHint(R.string.new_item_dialog_hint)
 
-        databaseHelper = DatabaseHelperImpl(context)
+        databaseHelper = DatabaseHelperImpl(context!!)
 
-        val dialogBuilder = AlertDialog.Builder(activity)
+        val dialogBuilder = AlertDialog.Builder(activity!!)
                 .setTitle(R.string.new_item_dialog_title)
                 .setView(layout)
                 .setPositiveButton(R.string.new_item_dialog_positive_button) { dialog, which -> databaseHelper.addCounterEntry(editText.text.toString()) }
@@ -48,6 +48,6 @@ class CreateItemDialog : DialogFragment() {
 
     override fun onDismiss(dialogInterface: DialogInterface?) {
         super.onDismiss(dialogInterface)
-        activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 }

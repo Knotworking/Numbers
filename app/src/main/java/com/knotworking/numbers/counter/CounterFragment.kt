@@ -19,7 +19,7 @@ class CounterFragment : Fragment(), LoaderManager.LoaderCallbacks<List<CounterIt
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CounterAdapter
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater!!.inflate(R.layout.fragment_counter, container, false)
         recyclerView = root.findViewById<View>(R.id.fragment_counter_recyclerView) as RecyclerView
         return root
@@ -31,7 +31,7 @@ class CounterFragment : Fragment(), LoaderManager.LoaderCallbacks<List<CounterIt
         val layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
         recyclerView.itemAnimator?.changeDuration = 0
-        adapter = CounterAdapter(activity)
+        adapter = CounterAdapter(context!!)
         recyclerView.adapter = adapter
 
         loaderManager.initLoader(COUNTER_LOADER, null, this@CounterFragment)
@@ -45,11 +45,11 @@ class CounterFragment : Fragment(), LoaderManager.LoaderCallbacks<List<CounterIt
         return CounterListLoader(activity, uri, projection, null, null, null)
     }
 
-    override fun onLoadFinished(loader: Loader<List<CounterItem>>?, data: List<CounterItem>?) {
+    override fun onLoadFinished(loader: Loader<List<CounterItem>>, data: List<CounterItem>?) {
         adapter.setData(data)
     }
 
-    override fun onLoaderReset(loader: Loader<List<CounterItem>>?) {
+    override fun onLoaderReset(loader: Loader<List<CounterItem>>) {
         adapter.setData(null)
     }
 }

@@ -21,8 +21,8 @@ class EditItemDialog : DialogFragment() {
     private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        databaseHelper = DatabaseHelperImpl(context)
-        val arguments = arguments
+        databaseHelper = DatabaseHelperImpl(context!!)
+        val arguments = arguments!!
         val id = arguments.getInt(ARG_ID)
         val currentName = arguments.getString(ARG_NAME)
         val currentCount = arguments.getInt(ARG_COUNT)
@@ -38,7 +38,7 @@ class EditItemDialog : DialogFragment() {
         countEditText.visibility = View.VISIBLE
         countEditText.setText(currentCount.toString())
 
-        val dialogBuilder = AlertDialog.Builder(activity)
+        val dialogBuilder = AlertDialog.Builder(activity!!)
                 .setTitle(R.string.edit_item_dialog_title)
                 .setView(layout)
                 .setPositiveButton(R.string.edit_item_dialog_positive_button) { dialog, which ->

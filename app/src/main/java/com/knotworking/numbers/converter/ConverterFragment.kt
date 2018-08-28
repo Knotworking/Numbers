@@ -11,11 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.knotworking.numbers.R
-import com.knotworking.numbers.Utils
 import com.knotworking.numbers.converter.history.HistoryCursorConverter
 import com.knotworking.numbers.database.DatabaseContract
 import com.knotworking.numbers.databinding.FragmentConverterBinding
-import kotlinx.android.synthetic.main.fragment_converter.*
 
 class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -47,7 +45,7 @@ class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                 val uri = DatabaseContract.ExchangeRates.CONTENT_URI
                 val projection = arrayOf(DatabaseContract.ExchangeRates.COL_CURRENCY,
                         DatabaseContract.ExchangeRates.COL_RATE)
-                return CursorLoader(context, uri, projection, null, null, null)
+                return CursorLoader(context!!, uri, projection, null, null, null)
             }
             else -> {
                 val uri = DatabaseContract.ConversionHistory.CONTENT_URI
@@ -58,15 +56,15 @@ class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                         DatabaseContract.ConversionHistory.COL_OUTPUT_UNIT_CODE,
                         DatabaseContract.ConversionHistory.COL_OUTPUT_VALUE)
                 val sortOrder = DatabaseContract.ConversionHistory.COL_ID + " DESC"
-                return CursorLoader(context, uri, projection, null, null, sortOrder)
+                return CursorLoader(context!!, uri, projection, null, null, sortOrder)
             }
         }
 
 
     }
 
-    override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
-        when (loader?.id) {
+    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
+        when (loader.id) {
             EXCHANGE_RATE_LOADER -> {
                 data?.let {
                     binding.viewModel!!.exchangeRates = ExchangeRateCursorConverter.getData(it)
@@ -80,8 +78,8 @@ class ConverterFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         }
     }
 
-    override fun onLoaderReset(loader: Loader<Cursor>?) {
-        when (loader?.id) {
+    override fun onLoaderReset(loader: Loader<Cursor>) {
+        when (loader.id) {
             EXCHANGE_RATE_LOADER -> binding.viewModel!!.exchangeRates = emptyMap()
             CONVERSION_HISTORY_LOADER -> binding.viewModel!!.historyAdapter.setData(emptyList())
         }

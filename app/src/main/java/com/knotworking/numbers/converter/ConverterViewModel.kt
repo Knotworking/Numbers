@@ -44,7 +44,7 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
 
     var outputValue: ObservableField<Float> = ObservableField(0f)
 
-    val context: Context = fragment.context
+    val context: Context = fragment.context!!
 
     //TODO inject singletons
     val databaseHelper: DatabaseHelper = DatabaseHelperImpl(context)
