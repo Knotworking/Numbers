@@ -1,4 +1,6 @@
 <resources>
+
+    <!-- Labels -->
     <string name="app_name">Numbers</string>
     <string name="first_tab">Stuff</string>
     <string name="second_tab">Things</string>
@@ -10,6 +12,9 @@
     <string name="edit_item_dialog_title">Edit Item</string>
     <string name="edit_item_dialog_positive_button">Save</string>
     <string name="save_button">Save</string>
+
+    <!-- Messages -->
+    <string name="empty_exchange_rates">Exchange rates have not been downloaded</string>
 
     <string-array name="type_array">
         <item>Mass</item>

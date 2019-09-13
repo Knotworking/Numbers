@@ -19,6 +19,7 @@ import com.knotworking.numbers.converter.UnitCode.MASS_KG
 import com.knotworking.numbers.converter.UnitCode.MASS_LBS
 import com.knotworking.numbers.converter.UnitCode.MASS_OZ
 import com.knotworking.numbers.converter.UnitCode.USD
+import kotlin.math.roundToInt
 
 /**
  * Created by BRL on 25/03/17.
@@ -109,7 +110,7 @@ object Utils {
     }
 
     fun round(input: Float): Float {
-        return Math.round(input * 100) / 100f
+        return (input * 100).roundToInt() / 100f
     }
 
     fun getFloatFromString(floatString: String): Float {

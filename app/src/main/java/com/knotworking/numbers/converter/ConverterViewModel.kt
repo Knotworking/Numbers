@@ -10,7 +10,8 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.knotworking.numbers.BR
+import android.widget.Toast
+import com.android.databinding.library.baseAdapters.BR
 import com.knotworking.numbers.R
 import com.knotworking.numbers.Utils
 import com.knotworking.numbers.converter.history.HistoryAdapter
@@ -47,7 +48,7 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
     val context: Context = fragment.context!!
 
     //TODO inject singletons
-    val databaseHelper: DatabaseHelper = DatabaseHelperImpl(context)
+    private val databaseHelper: DatabaseHelper = DatabaseHelperImpl(context)
 
     var inputOutputAdapter: ArrayAdapter<CharSequence>? = null
         @Bindable get() = field
@@ -239,9 +240,16 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
             }
             UnitCode.TYPE_CURRENCY -> {
                 Log.i("ConverterViewModel", "$$$ selected")
-                inputOutputAdapter = currencyAdapter
-                inputUnitCode.set(UnitCode.EUR)
-                outputUnitCode.set(UnitCode.USD)
+
+                if (exchangeRates.isEmpty()) {
+                    Toast.makeText(context, R.string.empty_exchange_rates, Toast.LENGTH_SHORT).show()
+                    handleTypeSelected(UnitCode.TYPE_MASS)
+                } else {
+                    inputOutputAdapter = currencyAdapter
+                    inputUnitCode.set(UnitCode.EUR)
+                    outputUnitCode.set(UnitCode.USD)
+                }
+
             }
         }
     }

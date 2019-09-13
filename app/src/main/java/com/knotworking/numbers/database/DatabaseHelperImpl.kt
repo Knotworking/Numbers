@@ -65,9 +65,9 @@ class DatabaseHelperImpl(private val context: Context) : DatabaseHelper {
     }
 
     override fun saveExchangeRates(rates: Map<String, Float>) {
-        rates.forEach({
+        rates.forEach {
             replaceExchangeRate(currency = it.key, rate = it.value)
-        })
+        }
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         sharedPreferences.edit().putLong(EXCHANGE_RATE_FETCH_TIME, System.currentTimeMillis()).apply()
