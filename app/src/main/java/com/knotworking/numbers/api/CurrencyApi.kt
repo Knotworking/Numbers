@@ -27,8 +27,8 @@ class CurrencyApi(context: Context) {
 
             override fun onResponse(call: retrofit2.Call<ExchangeRatesResponse>, response: retrofit2.Response<ExchangeRatesResponse>) {
                 response.body()?.let {
-                    it.rates = it.rates.filterKeys {
-                        when (it) {
+                    it.rates = it.rates.filterKeys { currencyCode ->
+                        when (currencyCode) {
                             USD, CAD, GBP, EUR -> true
                             else -> false
                         }
