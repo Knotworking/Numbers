@@ -26,5 +26,5 @@ Now that I've finished my hike, photos and stats can be found [here](https://pho
 ![counter-screen](https://user-images.githubusercontent.com/25524912/38684806-6ead042c-3e68-11e8-993f-c98ed15b9754.jpg)
 
 ### See it in Action
-Please ignore the weird gif pattern
 <img src="Numbers.gif" width="300"/>
+Please ignore the weird gif pattern
