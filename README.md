@@ -2,7 +2,7 @@
 
 >I wish I could say that my personal projects reflected my best work, but unfortunately it takes time to develop production quality apps and whilst working as a full-time android developer I often need to spend my remaining time on other pursuits. As they are just for my use, there's not the usual amount of attention paid to testing that one would want on an app in the playstore.
 
-A small personal sandbox project, an app to be used on my PCT hike. A unit converter (to help me with the whole metric-imperial confusion) and item counter, so I can keep some stats about my hike. 
+A small personal sandbox project, an app to be used on my PCT hike. A **unit converter** (to help me with the whole metric-imperial confusion) and **item counter**, so I can keep some stats about my hike. 
 
 Now that I've finished my hike, photos and stats can be found [here](https://photos.app.goo.gl/iYMvSZTMy6I3FhhI2).
 
@@ -20,8 +20,11 @@ Now that I've finished my hike, photos and stats can be found [here](https://pho
 * Edit or remove a counter item
 
 ### Converter Screen
-
 ![converter-screen](https://user-images.githubusercontent.com/25524912/38684804-6e8cc4e6-3e68-11e8-9b4b-77f51a26fab7.jpg)
 
 ### Counter Screen
 ![counter-screen](https://user-images.githubusercontent.com/25524912/38684806-6ead042c-3e68-11e8-993f-c98ed15b9754.jpg)
+
+### See it in Action
+Please ignore the weird gif pattern
+<img src="Numbers.gif" width="300"/>
