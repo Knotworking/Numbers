@@ -7,8 +7,8 @@ A small personal sandbox project, an app to be used on my PCT hike. A **unit con
 Now that I've finished my hike, photos and stats can be found [here](https://photos.app.goo.gl/iYMvSZTMy6I3FhhI2).
 
 ### Key Project Features
-* **Basic SQLite DB** - The database is written in the older style using SQLiteOpenHelper. There may be newer high-level ways to setup and interact with a database in Android these days, but it's still good to know how this stuff works, and it's a good opportunity to get to understand SQL statement
-* **Loaders** - Before RxJava and LiveData became the thing, this was a nice way to observe changes to data and update the UI
+* **Basic SQLite DB** - The database is written in the older style using SQLiteOpenHelper. There may be newer high-level ways to setup and interact with a database in Android these days, but it's still good to know how this stuff works, and it's a good opportunity to get to understand SQL statements.
+* **Loaders** - Before RxJava and LiveData became the thing, this was a nice way to observe changes to data and update the UI.
 * **'Silent' setters** - I added some extension functions to allow me to set observed values without triggering listeners. This is necessary to prevent infinite loops as the input fields can also be set in the code.
 * **DiffUtil** - calculates changes to a data set and then allows a RecyclerView adapter to animate changes.
 * **Networking** - Using Retrofit and OkHttp to fetch currency exchange rates.
