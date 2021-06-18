@@ -45,8 +45,13 @@
     <string-array name="currency_array">
         <item>EUR(€)</item>
         <item>GBP(£)</item>
-        <item>USD($)</item>
-        <item>CAD($)</item>
+        <item>BGN lev(лв)</item>
+        <item>RSD din(дин)</item>
+        <item>MKD (Ден)</item>
+        <item>ALL lek(L)</item>
+        <item>BAM (KM)</item>
+        <item>HRK (kn)</item>
+        <item>CHF (Fr)</item>
     </string-array>
 
 </resources>

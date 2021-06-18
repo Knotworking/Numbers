@@ -247,7 +247,7 @@ class ConverterViewModel(private val fragment: ConverterFragment) :
                 } else {
                     inputOutputAdapter = currencyAdapter
                     inputUnitCode.set(UnitCode.EUR)
-                    outputUnitCode.set(UnitCode.USD)
+                    outputUnitCode.set(UnitCode.BGN)
                 }
 
             }

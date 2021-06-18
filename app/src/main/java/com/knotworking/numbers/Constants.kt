@@ -8,8 +8,13 @@ object Constants {
     //Currencies
     val EUR = "EUR"
     val GBP = "GBP"
-    val USD = "USD"
-    val CAD = "CAD"
+    val CHF = "CHF"
+    val BGN = "BGN"
+    val RSD = "RSD"
+    val MKD = "MKD"
+    val ALL = "ALL"
+    val BAM = "BAM"
+    val HRK = "HRK"
 
     //Tabs
     val CONVERTER_TAB = 0

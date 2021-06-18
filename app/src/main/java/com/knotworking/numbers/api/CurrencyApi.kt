@@ -2,10 +2,15 @@ package com.knotworking.numbers.api
 
 import android.content.Context
 import android.util.Log
-import com.knotworking.numbers.Constants.CAD
+import com.knotworking.numbers.Constants.ALL
+import com.knotworking.numbers.Constants.BAM
+import com.knotworking.numbers.Constants.BGN
+import com.knotworking.numbers.Constants.CHF
 import com.knotworking.numbers.Constants.EUR
 import com.knotworking.numbers.Constants.GBP
-import com.knotworking.numbers.Constants.USD
+import com.knotworking.numbers.Constants.HRK
+import com.knotworking.numbers.Constants.MKD
+import com.knotworking.numbers.Constants.RSD
 import com.knotworking.numbers.database.DatabaseHelper
 import com.knotworking.numbers.database.DatabaseHelperImpl
 
@@ -29,7 +34,7 @@ class CurrencyApi(context: Context) {
                 response.body()?.let {
                     it.rates = it.rates.filterKeys { currencyCode ->
                         when (currencyCode) {
-                            USD, CAD, GBP, EUR -> true
+                            BGN, RSD, GBP, EUR, MKD, ALL, BAM, HRK, CHF -> true
                             else -> false
                         }
                     }

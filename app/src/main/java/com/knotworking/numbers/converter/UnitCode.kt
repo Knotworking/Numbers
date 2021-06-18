@@ -29,6 +29,11 @@ object UnitCode {
     //Currency
     val EUR = 0
     val GBP = 1
-    val USD = 2
-    val CAD = 3
+    val BGN = 2
+    val RSD = 3
+    val MKD = 4
+    val ALL = 5
+    val BAM = 6
+    val HRK = 7
+    val CHF = 8
 }
