@@ -1,10 +1,10 @@
 # Numbers
 
->I wish I could say that my personal projects reflected my best work, but unfortunately it takes time to develop production quality apps and whilst working as a full-time android developer I often need to spend my remaining time on other pursuits. As they are just for my use, there's not the usual amount of attention paid to testing that one would want on an app in the playstore.
+>I wish I could say that my personal projects reflected my best work, but unfortunately it takes time to develop production quality apps and whilst working as a full-time android developer I often need to spend my remaining time on other pursuits. As they are just for my use, there's not the usual amount of attention paid to testing and polish that one would want on an app in the playstore, and I mostly use them to play around with different approaches.
 
 A small personal sandbox project, an app to be used on my PCT hike. A **unit converter** (to help me with the whole metric-imperial confusion) and **item counter**, so I can keep some stats about my hike. 
 
-Now that I've finished my hike, photos and stats can be found [here](https://photos.app.goo.gl/iYMvSZTMy6I3FhhI2).
+Now that I've finished my PCT hike, photos and stats can be found [here](https://photos.app.goo.gl/iYMvSZTMy6I3FhhI2).
 
 ### Key Project Features
 * **Basic SQLite DB** - The database is written in the older style using SQLiteOpenHelper. There may be newer high-level ways to setup and interact with a database in Android these days, but it's still good to know how this stuff works, and it's a good opportunity to get to understand SQL statements.
